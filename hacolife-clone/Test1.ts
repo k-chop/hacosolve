@@ -86,6 +86,7 @@ module Haco {
 
             // events
             this.tiles.setAll('inputEnabled', true);
+            this.tiles.setAll('input.pixelPerfectClick', true);
             this.tiles.callAll('events.onInputDown.add', 'events.onInputDown', this.a, this);
                         
             // centering tiles
@@ -136,6 +137,7 @@ module Haco {
             this.cell = s.solve(this.cell, this.SIZE_X, this.aaa, this);
             if (s.ok == null) {
                 console.log("cannot solve...");
+                for (var i = 0; i < this.cell.length; i++) if (this.cell[i] != 0) this.cell[i] = 5;
             } else {
                 console.log("solved!")
                 this.cell = s.ok;

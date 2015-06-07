@@ -270,8 +270,10 @@ module Haco {
                     lx = Math.max(lx, i % width | 0);
                 }
             }
-            lx += 4; lx = Math.min(lx, width);
-            ly += 4; ly = Math.min(ly, h);
+            si -= 1; si = Math.max(si, 0);
+            sj -= 1; sj = Math.max(sj, 0);
+            lx += 5; lx = Math.min(lx, width);
+            ly += 5; ly = Math.min(ly, h);
             
             console.log("("+sj+", "+si+") to ("+lx+", "+ly+")")
 
@@ -341,8 +343,8 @@ module Haco {
 
             if (count == 1) {
                 //console.log("at last!!");
-                sx = 0;
-                sy = 0;
+                //sx = 0;
+                //sy = 0;
             }
 
             if (7 < fillNum) {

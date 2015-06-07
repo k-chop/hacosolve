@@ -1,0 +1,12 @@
+*.sln
+*.suo
+*.js.map
+bin/
+obj/
+web.*.config
+*.csproj
+*.csproj.user
+*.js
+*.min.js
+*.d.ts
+web.config

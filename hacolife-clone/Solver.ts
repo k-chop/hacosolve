@@ -272,11 +272,12 @@ module Haco {
                     lx = Math.max(lx, i % width | 0);
                 }
             }
+            /*
             si -= 1; si = Math.max(si, 0);
             sj -= 1; sj = Math.max(sj, 0);
             lx += 5; lx = Math.min(lx, width);
             ly += 5; ly = Math.min(ly, h);
-            
+            */
             console.log("("+sj+", "+si+") to ("+lx+", "+ly+")")
 
             this.skip_cache = new Array<boolean>(ns.length);
@@ -284,7 +285,7 @@ module Haco {
 
             var count = sumTiles / 6 | 0;
             console.log("start! count: " + count);
-            var ret = this.solve1(this.copy(ns), width, count, count, 2, 0, 0, lx, ly, callback, context);
+            var ret = this.solve1(this.copy(ns), width, count, count, 2, sj, si, sj, si, lx, ly, callback, context);
             console.log("skip_cache_hit: " + this.skip_cache_hit);
             return ret;
         }
@@ -342,7 +343,7 @@ module Haco {
             return c < 6;
         }
 
-        solve1(ns: number[], width: number, count: number, countMax: number, fillNum: number, sx: number, sy: number, lx: number, ly: number, callback: any, context: any): number[] {
+        solve1(ns: number[], width: number, count: number, countMax: number, fillNum: number, sx: number, sy: number, nx: number, ny: number, lx: number, ly: number, callback: any, context: any): number[] {
 
             if (count == 1) {
                 //console.log("at last!!");
@@ -359,16 +360,30 @@ module Haco {
             var len = h * w;
 
             if (count != countMax && this.cutoff_check(ns, width)) {
-                //console.log("cutoff!");
+                //console.log("-------cutoff!");
                 return ns;
             }
+
+            var nextX = nx, nextY = ny;
 
             for (var y = sy; y < ly; y++) {
                 for (var x = sx; x < lx; x++) {
 
+                    if (nx != -1 && ny != -1) {
+                        //console.log("nxy init. start from " + nx + "," + ny);
+                        x = nx;
+                        y = ny;
+                        nx = -1;
+                        ny = -1;
+                    }
+
                     if (this.skip(ns, width, x, y)) {
                         continue;
                     }
+
+                    if (this.ok != null) return ns;
+
+                    //console.log("count:" + count + ", chk(" + x + ", " + y + ") sxy["+sx+", "+sy+"]");
 
                     var all = this.net.all;
                     for (var i = 0; i < all.length; i++) {
@@ -380,15 +395,17 @@ module Haco {
                                 ns = a;
                                 return ns;
                             } else {
-                                this.solve1(a, w, count - 1, countMax, fillNum + 1, x, y, lx, ly, callback, context);
+                                //console.log("stack------")
+                                this.solve1(a, w, count - 1, countMax, fillNum + 1, sx, sy, x, y, lx, ly, callback, context);
                             }
                         }
                     }
                 }
+                //console.log("nextline");
             }
 
             //callback.apply(context, [count]);
-
+            //console.log("-------stack")
             return ns;
         }
 

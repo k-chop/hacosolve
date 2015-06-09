@@ -1,0 +1,7 @@
+{
+	"compilerOptions": {
+		"out": "source/haco.js",
+		"sourceMap": true
+	},
+
+}

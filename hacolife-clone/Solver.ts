@@ -312,7 +312,7 @@ module Haco {
                         this.skip_cache[yy * width + xx] = true;
                         return true;
                     }
-                    if (emptyN + filledTileN >= 19) return true;
+                    if (emptyN + filledTileN > 19) return true;
                 }
             }
         }

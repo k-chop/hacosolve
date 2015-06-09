@@ -157,7 +157,7 @@ module Haco {
         match(ns: number[], w: number, x: number, y: number): boolean {
             var h = ns.length / w | 0;
 
-            if (x + this.width > w || y + this.height > h) return false;
+            if (w < x + this.width || h < y + this.height) return false;
 
             for (var i = 0; i < this.height; i++) {
                 for (var j = 0; j < this.width; j++) {
@@ -287,6 +287,7 @@ module Haco {
             return ret;
         }
 
+        // ある座標から5*5のエリアに空のタイルが19個以上ある場合、以後その座標はスルー
         skip(ns: number[], width: number, xx: number, yy: number): boolean {
             if (this.skip_cache[yy * width + xx]) {
                 this.skip_cache_hit++;
@@ -307,7 +308,7 @@ module Haco {
                         filledTileN++;
                     }
                     if (tileN >= 6) return false;
-                    if (emptyN >= 19) {
+                    if (emptyN > 19) {
                         this.skip_cache[yy * width + xx] = true;
                         return true;
                     }

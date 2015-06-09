@@ -3,11 +3,11 @@ module Haco {
 
     export class Test1 extends Phaser.State {
 
-        //tiles: Phaser.Sprite[];
         cell: number[];
         tiles: Phaser.Group;
         SIZE_X = 20;
         SIZE_Y = 20;
+        accessor: util.XYAccessWrapper<number>;
 
         elasp_time: number;
 
@@ -15,19 +15,6 @@ module Haco {
 
             this.elasp_time = -1;
             this.tiles = this.game.add.group()
-
-            // util function
-            var aset = (x: number, y: number, op: number) => {
-                this.cell[y * this.SIZE_X + x] = op;
-            }
-
-            var bset = (op: number) => (x: number, y: number) => {
-                this.cell[y * this.SIZE_X + x] = op;
-            }
-
-            var aget = (x: number, y: number): number => {
-                return this.cell[y * this.SIZE_X + x];
-            }
 
             // initialize
             this.cell = new Array(this.SIZE_Y * this.SIZE_X);
@@ -38,8 +25,9 @@ module Haco {
                         this.cell[i] = 0;
                 }
             }
+            this.accessor = util.makeAccessor(this.cell, this.SIZE_X);
 
-            var set1 = bset(1);
+            var set1 = this.accessor.setter(1);
 
             // example
             set1(11, 10);
@@ -65,7 +53,7 @@ module Haco {
             // (cell status) == (sprite)
             // cell[i][j] == tiles.getAt(i * SIZE_Y + j)
 
-            var leftmost = 0
+            var aget = this.accessor.getter();
 
             for (var i = 0; i < this.SIZE_Y; i++) {
                 for (var j = 0; j < this.SIZE_X; j++) {
@@ -75,8 +63,6 @@ module Haco {
 
                     if (aget(j, i) == 0) {
                         tile.alpha = 0.2;
-                    } else {
-                        leftmost = Math.min(leftmost, x);
                     }
                     if (aget(j, i) == 1) tile.tint = 0xFFFFFF;
                     if (aget(j, i) == 2) tile.tint = 0x0000FF;
@@ -88,22 +74,20 @@ module Haco {
             this.tiles.setAll('inputEnabled', true);
             this.tiles.setAll('input.pixelPerfectClick', true);
             this.tiles.callAll('events.onInputDown.add', 'events.onInputDown', this.a, this);
-                        
-            // centering tiles
-            //this.tiles.x = ((this.world.width - this.tiles.width) / 2 | 0) - leftmost;
-            //this.tiles.y = (this.world.height - this.tiles.height) / 2 | 0;
-            
 
             // button
             var bSol = this.game.add.button(742, 570, 'button_solve', this.solve_start, this);
             var bRes = this.game.add.button(742, 45, 'button_reset', this.cell_reset, this);
             var bEra = this.game.add.button(742, 5, 'button_erase', this.cell_erase, this);
-            //bSol.anchor.setTo(0.5, 0.5); bRes.anchor.setTo(0.5, 0.5); bEra.anchor.setTo(0.5, 0.5);
+
             bSol.onInputOver.add(this.over, this);
+            bSol.onInputDown.add(this.down, this);
             bSol.onInputOut.add(this.out, this);
             bRes.onInputOver.add(this.over, this);
+            bRes.onInputDown.add(this.down, this);
             bRes.onInputOut.add(this.out, this);
             bEra.onInputOver.add(this.over, this);
+            bEra.onInputDown.add(this.down, this);
             bEra.onInputOut.add(this.out, this);
         }
 
@@ -113,6 +97,10 @@ module Haco {
 
         out(a: Phaser.Button) {
             a.tint = 0xFFFFFF;
+        }
+
+        down(a: Phaser.Button) {
+            a.tint = 0x777777;
         }
 
         a(item: Phaser.Sprite) {
@@ -148,13 +136,15 @@ module Haco {
             this.elasp_time = -1;
             var el = new Date().getTime();
             var s = new Solver();
-            this.cell = s.solve(this.cell, this.SIZE_X, this.aaa, this);
+            s.solve(this.cell, this.SIZE_X, this.aaa, this);
             if (s.solution == null) {
                 console.log("cannot solve...");
                 for (var i = 0; i < this.cell.length; i++) if (this.cell[i] != 0) this.cell[i] = 5;
             } else {
                 console.log("solved!")
-                this.cell = s.solution;
+                for (var i = 0; i < this.cell.length; i++) {
+                    this.cell[i] = s.solution[i];
+                }
             }
             this.elasp_time = (new Date().getTime() - el);
             this.coloring();
@@ -179,9 +169,7 @@ module Haco {
         }
 
         coloring() {
-            var aget = (x: number, y: number): number => {
-                return this.cell[y * this.SIZE_X + x];
-            }
+            var aget = this.accessor.getter();
 
             for (var i = 0; i < this.SIZE_Y; i++) {
                 for (var j = 0; j < this.SIZE_X; j++) {

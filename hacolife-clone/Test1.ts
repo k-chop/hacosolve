@@ -98,7 +98,21 @@ module Haco {
             var bSol = this.game.add.button(742, 570, 'button_solve', this.solve_start, this);
             var bRes = this.game.add.button(742, 45, 'button_reset', this.cell_reset, this);
             var bEra = this.game.add.button(742, 5, 'button_erase', this.cell_erase, this);
-            
+            //bSol.anchor.setTo(0.5, 0.5); bRes.anchor.setTo(0.5, 0.5); bEra.anchor.setTo(0.5, 0.5);
+            bSol.onInputOver.add(this.over, this);
+            bSol.onInputOut.add(this.out, this);
+            bRes.onInputOver.add(this.over, this);
+            bRes.onInputOut.add(this.out, this);
+            bEra.onInputOver.add(this.over, this);
+            bEra.onInputOut.add(this.out, this);
+        }
+
+        over(a: Phaser.Button) {
+            a.tint = 0xAAEEFF;
+        }
+
+        out(a: Phaser.Button) {
+            a.tint = 0xFFFFFF;
         }
 
         a(item: Phaser.Sprite) {

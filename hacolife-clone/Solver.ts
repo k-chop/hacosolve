@@ -157,6 +157,32 @@ module Haco {
             return ret;
         }
 
+        /*
+        matchF(ns: number[], nsWidth: number, x: number, y: number): boolean {
+            return this.matchF(ns, nsWidth, x, y, (n: number) => { return n != 1; });
+        }
+        */
+
+        // 
+        matchN(ns: number[], nsWidth: number, x: number, y: number): number {
+            var h = ns.length / nsWidth | 0;
+            var tileCheck = 0;
+
+            if (nsWidth < x + this.width || h < y + this.height) return -1;
+
+            for (var i = 0; i < this.height; i++) {
+                for (var j = 0; j < this.width; j++) {
+                    var n = ns[(y + i) * nsWidth + (x + j)];
+
+                    if (this.internal[i * this.width + j] && n != 0) return -1;
+
+                    if (n == 1) tileCheck++;
+                }
+            }
+            return tileCheck;
+        }
+
+        //matchF(ns: number[], nsWidth: number, x: number, y: number, f: (n: number) => boolean): boolean {
         match(ns: number[], nsWidth: number, x: number, y: number): boolean {
             var h = ns.length / nsWidth | 0;
 

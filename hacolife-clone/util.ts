@@ -1,6 +1,11 @@
 ﻿
 module util {
 
+    // [begin, end)
+    export function rnd(begin: number, end: number): number {
+        return Math.floor(Math.random() * (end - begin)) + begin;
+    }
+
     export function makeAccessor<T>(arr: Array<T>, width: number): XYAccessWrapper<T> {
         return new XYAccessWrapper(arr, width);
     }

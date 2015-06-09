@@ -8,6 +8,7 @@ module Haco {
         SIZE_X = 20;
         SIZE_Y = 20;
         accessor: util.XYAccessWrapper<number>;
+        gen: AutoGenerator;
 
         elasp_time: number;
 
@@ -19,13 +20,11 @@ module Haco {
             // initialize
             this.cell = new Array(this.SIZE_Y * this.SIZE_X);
             for (var i = 0; i < this.cell.length; i++) {
-                    if (Math.random() <= 0.5) {
-                        this.cell[i] = 0;
-                    } else {
-                        this.cell[i] = 0;
-                }
+                this.cell[i] = 0;
             }
             this.accessor = util.makeAccessor(this.cell, this.SIZE_X);
+
+            this.gen = new AutoGenerator(this.SIZE_X, this.SIZE_Y);
 
             var set1 = this.accessor.setter(1);
 
@@ -89,6 +88,20 @@ module Haco {
             bEra.onInputOver.add(this.over, this);
             bEra.onInputDown.add(this.down, this);
             bEra.onInputOut.add(this.out, this);
+
+            // key
+            this.game.input.keyboard.addCallbacks(this, null, null, this.keyPress);
+
+        }
+
+        keyPress(char: string) {
+            var c: number = parseInt(char, 10);
+            if (!isNaN(c)) { // 0-9
+                console.log("auto-generate: " + c);
+                this.generate(c);
+            } else {
+                console.log(char);
+            }
         }
 
         over(a: Phaser.Button) {
@@ -101,6 +114,12 @@ module Haco {
 
         down(a: Phaser.Button) {
             a.tint = 0x777777;
+        }
+
+        generate(n: number) {
+            var ns = this.gen.generate(n);
+            for (var i = 0; i < ns.length; i++) this.cell[i] = ns[i];
+            this.coloring();
         }
 
         a(item: Phaser.Sprite) {
@@ -173,18 +192,20 @@ module Haco {
 
             for (var i = 0; i < this.SIZE_Y; i++) {
                 for (var j = 0; j < this.SIZE_X; j++) {
+                    var tile: Phaser.Sprite = this.tiles.getAt(i * this.SIZE_X + j);
                     if (aget(j, i) == 0) {
-                        var tile: Phaser.Sprite = this.tiles.getAt(i * this.SIZE_X + j)
                         tile.tint = 0xFFFFFF;
                         tile.alpha = 0.2;
+                    } else {
+                        tile.alpha = 1;
                     }
-                    if (aget(j, i) == 1) this.tiles.getAt(i * this.SIZE_X + j).tint = 0xFFFFFF;
-                    if (aget(j, i) == 2) this.tiles.getAt(i * this.SIZE_X + j).tint = 0x0000FF;
-                    if (aget(j, i) == 3) this.tiles.getAt(i * this.SIZE_X + j).tint = 0xFF00FF;
-                    if (aget(j, i) == 4) this.tiles.getAt(i * this.SIZE_X + j).tint = 0xFFFF00;
-                    if (aget(j, i) == 5) this.tiles.getAt(i * this.SIZE_X + j).tint = 0xFF0000;
-                    if (aget(j, i) == 6) this.tiles.getAt(i * this.SIZE_X + j).tint = 0x00FFFF;
-                    if (aget(j, i) == 7) this.tiles.getAt(i * this.SIZE_X + j).tint = 0x00FF00;
+                    if (aget(j, i) == 1) tile.tint = 0xFFFFFF;
+                    if (aget(j, i) == 2) tile.tint = 0x0000FF;
+                    if (aget(j, i) == 3) tile.tint = 0xFF00FF;
+                    if (aget(j, i) == 4) tile.tint = 0xFFFF00;
+                    if (aget(j, i) == 5) tile.tint = 0xFF0000;
+                    if (aget(j, i) == 6) tile.tint = 0x00FFFF;
+                    if (aget(j, i) == 7) tile.tint = 0x00FF00;
                 }
             }
 

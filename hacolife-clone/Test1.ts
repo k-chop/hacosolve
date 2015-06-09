@@ -10,11 +10,11 @@ module Haco {
         accessor: util.XYAccessWrapper<number>;
         gen: AutoGenerator;
 
-        elasp_time: number;
+        tips: string;
 
         create() {
 
-            this.elasp_time = -1;
+            this.tips = undefined;
             this.tiles = this.game.add.group()
 
             // initialize
@@ -139,6 +139,7 @@ module Haco {
             for (var i = 0; i < this.cell.length; i++) {
                 this.cell[i] = 0;
             }
+            this.tips = "erased.";
             this.coloring();
         }
 
@@ -148,24 +149,36 @@ module Haco {
                     this.cell[i] = 1;
                 }
             }
+            this.tips = "reset complete.";
             this.coloring();
         }
 
         solve_start() {
-            this.elasp_time = -1;
+            this.tips = undefined;
+
+            if (this.cell.indexOf(1) == -1) {
+                if (this.cell.indexOf(2) != -1 || this.cell.indexOf(5) != -1) {
+                    this.tips = "you need reset!";
+                } else {
+                    this.tips = "place tiles with click, or press number key for auto-generate.";
+                }
+                return;
+            }
+
             var el = new Date().getTime();
             var s = new Solver();
             s.solve(this.cell, this.SIZE_X, this.aaa, this);
             if (s.solution == null) {
-                console.log("cannot solve...");
+                this.tips = "cannot solve..."
+                console.log(this.tips);
                 for (var i = 0; i < this.cell.length; i++) if (this.cell[i] != 0) this.cell[i] = 5;
             } else {
                 console.log("solved!")
                 for (var i = 0; i < this.cell.length; i++) {
                     this.cell[i] = s.solution[i];
                 }
+                this.tips = 'time: ' + ((new Date().getTime() - el) / 1000) + 's';
             }
-            this.elasp_time = (new Date().getTime() - el);
             this.coloring();
         }
 
@@ -181,8 +194,8 @@ module Haco {
             this.game.debug.text('tiles x: ' + this.tiles.x, 10, 76);
             this.game.debug.text('tiles y: ' + this.tiles.y, 10, 96);
 
-            if (this.elasp_time != -1) {
-                this.game.debug.text('time: ' + (this.elasp_time/1000) + 's', 10, 580)
+            if (this.tips != undefined) {
+                this.game.debug.text(this.tips, 10, 580)
             }
 
         }

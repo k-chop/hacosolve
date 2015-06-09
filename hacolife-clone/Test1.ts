@@ -149,12 +149,12 @@ module Haco {
             var el = new Date().getTime();
             var s = new Solver();
             this.cell = s.solve(this.cell, this.SIZE_X, this.aaa, this);
-            if (s.ok == null) {
+            if (s.solution == null) {
                 console.log("cannot solve...");
                 for (var i = 0; i < this.cell.length; i++) if (this.cell[i] != 0) this.cell[i] = 5;
             } else {
                 console.log("solved!")
-                this.cell = s.ok;
+                this.cell = s.solution;
             }
             this.elasp_time = (new Date().getTime() - el);
             this.coloring();

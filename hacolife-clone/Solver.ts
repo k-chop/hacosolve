@@ -68,7 +68,7 @@ module Haco {
             this.all = this.allCandidates();
         }
 
-        // return list of all candidates that except same shape piece.
+        // 同じ形状のピースを除いた全ての候補のリストを返す
         allCandidates(): Piece[] {
 
             var all: Piece[] = [];
@@ -78,7 +78,7 @@ module Haco {
             
             var dist: Piece[] = [], comp: number[] = [];
             for (var i = 0; i < all.length; i++) {
-                var hash = all[i].internal_number;
+                var hash = all[i].internalNumber;
                 if (comp.indexOf(hash) == -1) {
                     dist.push(all[i]);
                     comp.push(hash);
@@ -92,13 +92,13 @@ module Haco {
     export class Piece {
 
         internal: boolean[];
-        internal_number: number;
+        internalNumber: number;
         width: number;
         height: number;
 
         constructor(ns: boolean[], width: number) {
             this.internal = ns;
-            this.internal_number = Piece.toNumber(ns, width);
+            this.internalNumber = Piece.toNumber(ns, width);
             this.width = width;
             this.height = ns.length / width;
         }
@@ -133,6 +133,7 @@ module Haco {
             return this.internal[y * this.height + x];
         }
 
+        // 自身を90/180/270度回転したものとそれぞれの鏡像を作り、リストにぶち込んで返す
         variations(): Piece[] {
             var ret = new Array<Piece>(8);
 
@@ -156,15 +157,15 @@ module Haco {
             return ret;
         }
 
-        match(ns: number[], w: number, x: number, y: number): boolean {
-            var h = ns.length / w | 0;
+        match(ns: number[], nsWidth: number, x: number, y: number): boolean {
+            var h = ns.length / nsWidth | 0;
 
-            if (w < x + this.width || h < y + this.height) return false;
+            if (nsWidth < x + this.width || h < y + this.height) return false;
 
             for (var i = 0; i < this.height; i++) {
                 for (var j = 0; j < this.width; j++) {
                     if (this.internal[i * this.width + j]) {
-                        if (ns[(y + i) * w + (x + j)] != 1) {
+                        if (ns[(y + i) * nsWidth + (x + j)] != 1) {
                             return false;
                         }
                     }
@@ -174,19 +175,20 @@ module Haco {
             return true;
         }
 
-        filled(ns: number[], w: number, x: number, y: number, fillNumber: number): number[] {
+        filled(ns: number[], nsWidth: number, x: number, y: number, fillNumber: number): number[] {
 
             var ret = [].concat(ns);
             for (var i = 0; i < this.height; i++) {
                 for (var j = 0; j < this.width; j++) {
                     if (this.internal[i * this.width + j]) {
-                        ret[(y + i) * w + (x + j)] = fillNumber;
+                        ret[(y + i) * nsWidth + (x + j)] = fillNumber;
                     }
                 }
             }
             return ret;
         }
 
+        // このピースの鏡像を返す
         mirrored(): Piece {
 
             var l = this.internal.length;
@@ -201,6 +203,7 @@ module Haco {
             return new Piece(ns, w);
         }
 
+        // このピースを右に90度回転したものを返す
         rotated90(): Piece {
 
             var l = this.internal.length;
@@ -217,6 +220,7 @@ module Haco {
             return new Piece(ns, this.height);
         }
 
+        // デバッグ出力用
         toString() {
 
             var ret = '\n';
@@ -236,23 +240,20 @@ module Haco {
     export class Solver {
 
         net: NetOfCube;
-        ok: number[];
-        skip_cache: boolean[];
-        skip_cache_hit: number;
+        // 答えが入る、見つかっていない場合はundefined
+        solution: number[];
+        skipCache: boolean[];
+        skipCacheHit: number;
 
         constructor() {
             this.net = new NetOfCube();
-            this.ok = null;
-            this.skip_cache = [];
-        }
-
-        test(): number[] {
-            return [1,0,0,0,1,1,1,1,1,0,0,0];
+            this.solution = undefined;
+            this.skipCache = [];
         }
 
         solve(ns: number[], width: number, callback: any, context): number[]{
 
-            this.ok = null;
+            this.solution = undefined;
             // ns contains 0 or 1 only
             var sumTiles = ns.reduce((p, c, i, a) => p + c)
             // cant solve
@@ -261,39 +262,33 @@ module Haco {
                 return ns;
             }
 
-            // bound
+            // bounds
             var h = ns.length / width | 0;
-            var si = width, sj = h, lx = 0, ly = 0;
+            var sy = h, sx = width, lx = 0, ly = 0;
             for (var i = 0; i < ns.length; i++) {
                 if (ns[i] == 1) {
-                    si = Math.min(si, i / width | 0);
-                    sj = Math.min(sj, i % width | 0);
+                    sy = Math.min(sy, i / width | 0);
+                    sx = Math.min(sx, i % width | 0);
                     ly = Math.max(ly, i / width | 0);
                     lx = Math.max(lx, i % width | 0);
                 }
             }
-            /*
-            si -= 1; si = Math.max(si, 0);
-            sj -= 1; sj = Math.max(sj, 0);
-            lx += 5; lx = Math.min(lx, width);
-            ly += 5; ly = Math.min(ly, h);
-            */
-            console.log("("+sj+", "+si+") to ("+lx+", "+ly+")")
+            console.log("Bounds is (" + sx + ", " + sy + ") to (" + lx + ", " + ly + ")")
 
-            this.skip_cache = new Array<boolean>(ns.length);
-            this.skip_cache_hit = 0;
+            this.skipCache = new Array<boolean>(ns.length);
+            this.skipCacheHit = 0;
 
-            var count = sumTiles / 6 | 0;
-            console.log("start! count: " + count);
-            var ret = this.solve1(this.copy(ns), width, count, count, 2, sj, si, sj, si, lx, ly, callback, context);
-            console.log("skip_cache_hit: " + this.skip_cache_hit);
+            var tileCount = sumTiles / 6 | 0;
+            console.log("start! tile count: " + tileCount);
+            var ret = this.solve1(this.copy(ns), width, tileCount, tileCount, 2, sx, sy, sx, sy, lx, ly, callback, context);
+            console.log("skip_cache_hit: " + this.skipCacheHit);
             return ret;
         }
 
-        // ある座標から5*5のエリアに空のタイルが19個以上ある場合、以後その座標はスルー
+        // ある座標から5*5のエリアに空のタイルが19個以上ある場合、以後その座標のチェックはスルー
         skip(ns: number[], width: number, xx: number, yy: number): boolean {
-            if (this.skip_cache[yy * width + xx]) {
-                this.skip_cache_hit++;
+            if (this.skipCache[yy * width + xx]) {
+                this.skipCacheHit++;
                 return true;
             }
 
@@ -312,7 +307,7 @@ module Haco {
                     }
                     if (tileN >= 6) return false;
                     if (emptyN > 19) {
-                        this.skip_cache[yy * width + xx] = true;
+                        this.skipCache[yy * width + xx] = true;
                         return true;
                     }
                     if (emptyN + filledTileN > 19) return true;
@@ -320,7 +315,8 @@ module Haco {
             }
         }
 
-        cutoff_check(ns: number[], width: number): boolean {
+        // 一番左上にあるタイルに隣接したタイルが6つより少ないかどうか
+        cutoffCheck(ns: number[], width: number): boolean {
             var cnt = 0;
             var st = ns.indexOf(1)
             if (st == -1) return true;
@@ -359,7 +355,7 @@ module Haco {
             var w = width;
             var len = h * w;
 
-            if (count != countMax && this.cutoff_check(ns, width)) {
+            if (count != countMax && this.cutoffCheck(ns, width)) {
                 //console.log("-------cutoff!");
                 return ns;
             }
@@ -381,17 +377,17 @@ module Haco {
                         continue;
                     }
 
-                    if (this.ok != null) return ns;
+                    if (this.solution != undefined) return ns;
 
                     //console.log("count:" + count + ", chk(" + x + ", " + y + ") sxy["+sx+", "+sy+"]");
 
                     var all = this.net.all;
                     for (var i = 0; i < all.length; i++) {
-                        if (this.ok == null && all[i].match(ns, w, x, y)) {
+                        if (this.solution == undefined && all[i].match(ns, w, x, y)) {
                             //console.log("count "+count+", at "+x+","+y+": matched "+all[i].internal_number+""+all[i].toString())
                             var a = all[i].filled(ns, w, x, y, fillNum);
                             if (count == 1) { // found solution
-                                this.ok = this.copy(a);
+                                this.solution = this.copy(a);
                                 ns = a;
                                 return ns;
                             } else {

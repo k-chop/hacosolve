@@ -85,8 +85,7 @@ module Haco {
                 }
             }
 
-            // TODO: なぜか重複削除版だと通らないやつがある
-            return all;
+            return dist;
         }
     }
 
@@ -99,18 +98,21 @@ module Haco {
 
         constructor(ns: boolean[], width: number) {
             this.internal = ns;
-            this.internal_number = Piece.toNumber(ns);
+            this.internal_number = Piece.toNumber(ns, width);
             this.width = width;
             this.height = ns.length / width;
         }
 
-        static toNumber(arr: boolean[]): number {
+        static toNumber(arr: boolean[], width: number): number {
             var ret = 0, e = 1, idx = arr.length - 1;
             while (0 <= idx) {
                 if (arr[idx]) ret += e;
                 e = e << 1;
                 idx--;
             }
+            // possible width = 2,3,4,5 (3bit)
+            ret << 3;
+            ret += width;
             return ret;
         }
 

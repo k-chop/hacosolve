@@ -270,11 +270,15 @@ module Haco {
         solution: number[];
         skipCache: boolean[];
         skipCacheHit: number;
+        message: string;
+        foundCubeCount: number;
 
         constructor() {
             this.net = new NetOfCube();
             this.solution = undefined;
             this.skipCache = [];
+            this.message = '';
+            this.foundCubeCount = 0;
         }
 
         solve(ns: number[], width: number, callback: any, context): number[]{
@@ -284,7 +288,9 @@ module Haco {
             var sumTiles = ns.reduce((p, c, i, a) => p + c)
             // cant solve
             if (sumTiles % 6 != 0) {
-                console.log('sum of tiles is '+sumTiles+'. cant solve because cannot mod 6.')
+                var mes = 'sum of tiles is ' + sumTiles + '. cant solve because cannot mod 6.';
+                this.message = mes;
+                console.log(mes)
                 return ns;
             }
 
@@ -305,9 +311,14 @@ module Haco {
             this.skipCacheHit = 0;
 
             var tileCount = sumTiles / 6 | 0;
-            console.log("start! tile count: " + tileCount);
+            console.log("start! cube count: " + tileCount);
             var ret = this.solve1(this.copy(ns), width, tileCount, tileCount, 2, sx, sy, sx, sy, lx, ly, callback, context);
             console.log("skip_cache_hit: " + this.skipCacheHit);
+
+            if (this.solution != undefined) {
+                this.foundCubeCount = sumTiles / 6 | 0;
+            }
+
             return ret;
         }
 

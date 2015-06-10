@@ -97,7 +97,9 @@ module Haco {
         keyPress(char: string) {
             var c: number = parseInt(char, 10);
             if (!isNaN(c)) { // 0-9
-                console.log("auto-generate: " + c);
+                var msg = "auto-generate: " + c;
+                this.tips = msg
+                console.log(msg);
                 this.generate(c);
             } else {
                 console.log(char);
@@ -154,7 +156,6 @@ module Haco {
         }
 
         solve_start() {
-            this.tips = undefined;
 
             if (this.cell.indexOf(1) == -1) {
                 if (this.cell.indexOf(2) != -1 || this.cell.indexOf(5) != -1) {
@@ -169,15 +170,20 @@ module Haco {
             var s = new Solver();
             s.solve(this.cell, this.SIZE_X, this.aaa, this);
             if (s.solution == null) {
-                this.tips = "cannot solve..."
-                console.log(this.tips);
+                if (s.message != '') {
+                    this.tips = s.message;
+                    console.log(s.message);
+                } else {
+                    this.tips = "cannot solve..."
+                    console.log(this.tips);
+                }
                 for (var i = 0; i < this.cell.length; i++) if (this.cell[i] != 0) this.cell[i] = 5;
             } else {
                 console.log("solved!")
                 for (var i = 0; i < this.cell.length; i++) {
                     this.cell[i] = s.solution[i];
                 }
-                this.tips = 'time: ' + ((new Date().getTime() - el) / 1000) + 's';
+                this.tips = 'found '+s.foundCubeCount+' cubes. '+'time: ' + ((new Date().getTime() - el) / 1000) + 's';
             }
             this.coloring();
         }
@@ -187,12 +193,6 @@ module Haco {
         }
 
         render() {
-            
-            this.game.debug.text('width: ' + this.tiles.width, 10, 16);
-            this.game.debug.text('height: ' + this.tiles.height, 10, 36);
-            this.game.debug.text('group size: ' + this.tiles.length, 10, 56);
-            this.game.debug.text('tiles x: ' + this.tiles.x, 10, 76);
-            this.game.debug.text('tiles y: ' + this.tiles.y, 10, 96);
 
             if (this.tips != undefined) {
                 this.game.debug.text(this.tips, 10, 580)

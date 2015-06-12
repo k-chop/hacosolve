@@ -1,4 +1,4 @@
-﻿//import util = require('./util')
+﻿/// <reference path="../typings/bundle.d.ts" />
 
 module Haco {
 

@@ -1,4 +1,6 @@
-﻿module Haco {
+﻿/// <reference path="../typings/bundle.d.ts" />
+
+module Haco {
 
     export class Preloader extends Phaser.State {
 

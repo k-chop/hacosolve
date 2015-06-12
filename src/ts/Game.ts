@@ -1,4 +1,6 @@
-﻿module Haco {
+﻿/// <reference path="../typings/bundle.d.ts" />
+
+module Haco {
 
     export class Game extends Phaser.Game {
 

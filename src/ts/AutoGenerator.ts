@@ -1,4 +1,5 @@
-﻿
+﻿/// <reference path="../typings/bundle.d.ts" />
+
 module Haco {
 
     export class AutoGenerator {

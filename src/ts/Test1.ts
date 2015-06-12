@@ -1,4 +1,5 @@
-﻿
+﻿/// <reference path="../typings/bundle.d.ts" />
+
 module Haco {
 
     export class Test1 extends Phaser.State {

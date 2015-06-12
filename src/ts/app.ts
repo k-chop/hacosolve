@@ -1,4 +1,4 @@
-﻿
+﻿/// <reference path="../typings/bundle.d.ts" />
 
 window.onload = () => {
 

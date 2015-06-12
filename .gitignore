@@ -10,3 +10,6 @@ web.*.config
 *.min.js
 *.d.ts
 web.config
+node_modules/
+dest/
+tmp/

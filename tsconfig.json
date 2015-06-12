@@ -1,0 +1,26 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"module": "commonjs",
+		"noImplicitAny": false,
+		"removeComments": true,
+		"sourceMap": true
+	},
+	"filesGlob": [
+		"./**/*.ts",
+		"!./node_modules/**/*.ts"
+	],
+	"files": [
+		"src/typings/bundle.d.ts",
+		"src/ts/app.ts",
+		"src/ts/AutoGenerator.ts",
+		"src/ts/Boot.ts",
+		"src/ts/Game.ts",
+		"src/ts/MainMenu.ts",
+		"src/ts/Preloader.ts",
+		"src/ts/Solver.ts",
+		"src/ts/Test1.ts",
+		"src/ts/util.ts"
+	]
+
+}

@@ -11,5 +11,8 @@ web.*.config
 *.d.ts
 web.config
 node_modules/
-dest/
+!dest/*.html
+!dest/*.css
+!dest/config.rb
+dest/*/
 tmp/

@@ -1,7 +1,6 @@
 /// <reference path="./src/typings/gulp/gulp.d.ts"/>
-/// <reference path="./src/typings/gulp/gulp-typescript.d.ts"/>
 
-var gulp = require('gulp');
+import gulp = require('gulp');
 var ts = require('gulp-typescript');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');

@@ -101,6 +101,10 @@ export class Piece {
         this.height = ns.length / width;
     }
 
+    eq(that: Piece): boolean {
+        return this.internalNumber == that.internalNumber;
+    }
+
     static toNumber(arr: boolean[], width: number): number {
         var ret = 0, e = 1, idx = arr.length - 1;
         while (0 <= idx) {

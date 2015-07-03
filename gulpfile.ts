@@ -7,14 +7,14 @@ var sourcemaps = require('gulp-sourcemaps');
 
 var tsProject = ts.createProject('./tsconfig.json');
 
-gulp.task('default', () => {
+gulp.task('default', ['test'], () => {
     var tsResult = gulp.src(['src/ts/*.ts',
-        'src/typings/bundle.d.ts',
-        'spec/ts/*.ts'])
+        'src/typings/bundle.d.ts'])
     	.pipe(sourcemaps.init())
 		.pipe(ts(tsProject));
 
-	return tsResult.js
+    return tsResult.js
+            .pipe(gulp.dest('src/ts'))
 			.pipe(concat('output.js'))
 			.pipe(sourcemaps.write())
 			.pipe(gulp.dest('dest/js'));

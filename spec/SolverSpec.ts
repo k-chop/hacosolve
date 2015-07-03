@@ -27,7 +27,12 @@ describe('Piece', () => {
         var mirroredT = t.mirrored();
         expect(mirroredT.width).toBe(4);
         expect(mirroredT.height).toBe(3);
-        expect(mirroredT.internalNumber).not.toBe(t.internalNumber);
+        expect(mirroredT.eq(t)).toBeFalsy();
+    });
+
+    it('rotate 360', () => {
+        var at = t.rotated90().rotated90().rotated90().rotated90();
+        expect(at.eq(t)).toBeTruthy();
     });
 
 });

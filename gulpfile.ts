@@ -8,7 +8,9 @@ var sourcemaps = require('gulp-sourcemaps');
 var tsProject = ts.createProject('./tsconfig.json');
 
 gulp.task('default', () => {
-    var tsResult = tsProject.src()
+    var tsResult = gulp.src(['src/ts/*.ts',
+        'src/typings/bundle.d.ts',
+        'spec/ts/*.ts'])
     	.pipe(sourcemaps.init())
 		.pipe(ts(tsProject));
 
@@ -18,3 +20,10 @@ gulp.task('default', () => {
 			.pipe(gulp.dest('dest/js'));
 });
 
+gulp.task('test', () => {
+    var tsResult = gulp.src('spec/*.ts')
+        .pipe(ts({
+            module: 'commonjs'
+        }));
+    return tsResult.js.pipe(gulp.dest('spec'));
+});

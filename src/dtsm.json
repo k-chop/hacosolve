@@ -35,6 +35,9 @@
     "gulp/gulp-typescript.d.ts": {
       "ref": "066819c65ff561ca109955e0b725c253e243f0a2",
       "path": "gulp-typescript/gulp-typescript.d.ts"
+    },
+    "jasmine/jasmine.d.ts": {
+      "ref": "3e117d8c9ddf6443d7ed71a74f6bc8b6bcd36077"
     }
   }
 }

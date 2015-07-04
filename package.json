@@ -10,12 +10,14 @@
     "dtsm": "0.10.3",
     "gulp": "3.9.0",
     "gulp-concat": "^2.5.2",
+    "gulp-shell": "^0.4.2",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-typescript": "^2.7.6",
     "jasmine": "^2.3.1",
     "mocha": "^2.2.5",
     "typescript": "1.5.0-beta",
-    "typescript-require": "^0.2.9"
+    "typescript-require": "^0.2.9",
+    "vinyl-source-stream": "^1.1.0"
   },
   "private": true
 }

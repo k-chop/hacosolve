@@ -132,7 +132,11 @@ export class Piece {
     }
 
     at(x: number, y: number): boolean {
-        return this.internal[y * this.height + x];
+        if (0 <= x && x < this.width && 0 <= y && y < this.height) {
+            return this.internal[y * this.width + x];
+        } else {
+            return undefined;
+        }
     }
 
     // 自身を90/180/270度回転したものとそれぞれの鏡像を作り、リストにぶち込んで返す

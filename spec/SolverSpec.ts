@@ -40,4 +40,14 @@ describe('Pieces', () => {
         expect(mt.eq(t)).toBeTruthy();
     });
 
+    it('can access internal boolean array with xy axis', () => {
+        expect(t.at(0, 0)).toBeTruthy();
+        expect(t.at(3, 1)).toBeTruthy();
+        expect(t.at(0, 1)).toBeTruthy();
+        expect(t.at(3, 0)).toBeFalsy();
+        expect(t.at(3, 2)).toBeFalsy();
+        expect(t.at(4, 0)).toBeUndefined();
+        expect(t.at(0, 3)).toBeUndefined();
+    });
+
 });

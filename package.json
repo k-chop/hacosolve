@@ -10,6 +10,7 @@
     "dtsm": "0.10.3",
     "gulp": "3.9.0",
     "gulp-concat": "^2.5.2",
+    "gulp-jasmine": "^2.0.1",
     "gulp-shell": "^0.4.2",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-typescript": "^2.7.6",

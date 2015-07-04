@@ -4,13 +4,14 @@ import gulp = require('gulp');
 var source = require('vinyl-source-stream');
 var shell = require('gulp-shell');
 var ts = require('gulp-typescript');
+var jasmine = require('gulp-jasmine');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var browserify = require('browserify');
 
 var tsProject = ts.createProject('./tsconfig.json');
 
-gulp.task('default', ['compile', 'test']);
+gulp.task('default', ['jasmine']);
 
 gulp.task('build', ['compile'], () => {
     return browserify('src/ts/output.js')
@@ -32,10 +33,17 @@ gulp.task('compile', () => {
 			.pipe(gulp.dest('src/ts'));
 });
 
-gulp.task('test', ['compile'], () => {
+gulp.task('test-compile', ['compile'], () => {
     var tsResult = gulp.src('spec/*.ts')
         .pipe(ts({
             module: 'commonjs'
         }));
     return tsResult.js.pipe(gulp.dest('spec'));
+});
+
+gulp.task('jasmine', ['test-compile'], () => {
+    return gulp.src('spec/*.js')
+        .pipe(jasmine({
+            verbose: true
+        }));
 });

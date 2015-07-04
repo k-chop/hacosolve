@@ -96,7 +96,7 @@ export class Piece {
 
     constructor(ns: boolean[], width: number) {
         this.internal = ns;
-        this.internalNumber = Piece.toNumber(ns, width);
+        this.internalNumber = Piece.calcInternalNumber(ns, width);
         this.width = width;
         this.height = ns.length / width;
     }
@@ -105,7 +105,7 @@ export class Piece {
         return this.internalNumber == that.internalNumber;
     }
 
-    static toNumber(arr: boolean[], width: number): number {
+    static calcInternalNumber(arr: boolean[], width: number): number {
         var ret = 0, e = 1, idx = arr.length - 1;
         while (0 <= idx) {
             if (arr[idx]) ret += e;

@@ -1,11 +1,11 @@
 ﻿/// <reference path="../typings/jasmine/jasmine.d.ts" />
 
-import s = require('../ts/Solver')
+import { NetOfCube, Piece } from "../ts/Solver";
 
 describe('NetOfCube', () => {
 
     it('can count unique candidate', () => {
-        var net = new s.NetOfCube;
+        let net = new NetOfCube;
         expect(net.all.length).toBe(62);
     });
 
@@ -13,7 +13,7 @@ describe('NetOfCube', () => {
 
 describe('Pieces', () => {
 
-    var t = s.Piece.fromString(
+    let t = Piece.fromString(
         "#   " +
         "####" +
         "#   "
@@ -24,20 +24,26 @@ describe('Pieces', () => {
     });
 
     it('can create properly mirrored piece', () => {
-        var mirroredT = t.mirrored();
+        let mirroredT = t.mirrored();
         expect(mirroredT.width).toBe(4);
         expect(mirroredT.height).toBe(3);
         expect(mirroredT.eq(t)).toBeFalsy();
     });
 
     it('should equal to rotate 360', () => {
-        var at = t.rotated90().rotated90().rotated90().rotated90();
-        expect(at.eq(t)).toBeTruthy();
+        let net = new NetOfCube();
+        net.all.forEach((p, idx, arr) => {
+            let rotated360 = p.rotated90().rotated90().rotated90().rotated90()
+            expect(rotated360.eq(p)).toBeTruthy();
+        });
     });
 
     it('should equal to piece that rotated and mirrored many times', () => {
-        var mt = t.rotated90().mirrored().mirrored().rotated90().rotated90().mirrored().mirrored().rotated90();
-        expect(mt.eq(t)).toBeTruthy();
+        let net = new NetOfCube();
+        net.all.forEach((p, idx, arr) => {
+            let transformedMany = p.rotated90().mirrored().mirrored().rotated90().rotated90().mirrored().mirrored().rotated90();
+            expect(transformedMany.eq(p)).toBeTruthy();
+        });
     });
 
     it('can access internal boolean array with xy axis', () => {

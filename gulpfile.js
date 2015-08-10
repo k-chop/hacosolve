@@ -31,17 +31,25 @@ gulp.task('compile', function(){
 			.pipe(gulp.dest('src/js'));
 });
 
-gulp.task('test-compile', ['compile'], function(){
+var testCompile = function(){
     var tsResult = gulp.src('src/test/*.ts')
         .pipe(ts({
             module: 'commonjs'
         }));
     return tsResult.js.pipe(gulp.dest('out/src/test'));
-});
+};
 
-gulp.task('jasmine', ['test-compile'], function(){
+gulp.task('test-compile', ['compile'], testCompile);
+
+var testRun = function(){
     return gulp.src('out/src/test/*.js')
         .pipe(jasmine({
             verbose: true
         }));
-});
+};
+
+gulp.task('jasmine', ['test-compile'], testRun);
+
+gulp.task('test-compile-only', testCompile);
+
+gulp.task('test-only', ['test-compile-only'], testRun);

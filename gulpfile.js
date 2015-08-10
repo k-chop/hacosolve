@@ -26,6 +26,7 @@ gulp.task('compile', function(){
 
     return tsResult.js
             .pipe(gulp.dest('out/src/ts'))
+            .pipe(gulp.dest('src/js'))
 			.pipe(concat('output.js'))
 			.pipe(gulp.dest('src/js'));
 });

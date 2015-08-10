@@ -3,13 +3,11 @@
 		"target": "es5",
 		"module": "commonjs",
 		"noImplicitAny": false,
+		"noEmitOnError": true,
 		"removeComments": true,
-		"sourceMap": true
+		"sourceMap": false,
+		"out": "./output.js"
 	},
-	"filesGlob": [
-		"./**/*.ts",
-		"!./node_modules/**/*.ts"
-	],
 	"files": [
 		"src/typings/bundle.d.ts",
 		"src/ts/app.ts",
@@ -22,5 +20,4 @@
 		"src/ts/Test1.ts",
 		"src/ts/util.ts"
 	]
-
 }

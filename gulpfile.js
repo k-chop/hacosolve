@@ -1,6 +1,6 @@
 /// <reference path="./src/typings/gulp/gulp.d.ts"/>
 
-import gulp = require('gulp');
+var gulp = require('gulp');
 var source = require('vinyl-source-stream');
 var shell = require('gulp-shell');
 var ts = require('gulp-typescript');
@@ -13,27 +13,23 @@ var tsProject = ts.createProject('./tsconfig.json');
 
 gulp.task('default', ['jasmine']);
 
-gulp.task('build', ['compile'], () => {
+gulp.task('build', ['compile'], function(){
     return browserify('src/ts/output.js')
         .bundle()
         .pipe(source('bundle.js'))
         .pipe(gulp.dest('dest/'));
 });
-
-gulp.task('compile', () => {
-    var tsResult = gulp.src(['src/ts/*.ts',
-        'src/typings/bundle.d.ts'])
-    	.pipe(sourcemaps.init())
+//'src/typings/bundle.d.ts'
+gulp.task('compile', function(){
+    var tsResult = gulp.src(['src/ts/*.ts'])
 		.pipe(ts(tsProject));
 
     return tsResult.js
-            .pipe(gulp.dest('src/ts'))
 			.pipe(concat('output.js'))
-			.pipe(sourcemaps.write())
 			.pipe(gulp.dest('src/ts'));
 });
 
-gulp.task('test-compile', ['compile'], () => {
+gulp.task('test-compile', ['compile'], function(){
     var tsResult = gulp.src('spec/*.ts')
         .pipe(ts({
             module: 'commonjs'
@@ -41,7 +37,7 @@ gulp.task('test-compile', ['compile'], () => {
     return tsResult.js.pipe(gulp.dest('spec'));
 });
 
-gulp.task('jasmine', ['test-compile'], () => {
+gulp.task('jasmine', ['test-compile'], function(){
     return gulp.src('spec/*.js')
         .pipe(jasmine({
             verbose: true

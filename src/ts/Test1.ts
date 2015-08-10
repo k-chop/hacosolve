@@ -208,20 +208,22 @@ class Test1 extends Phaser.State {
 
         for (var i = 0; i < this.SIZE_Y; i++) {
             for (var j = 0; j < this.SIZE_X; j++) {
-                var tile: Phaser.Sprite = this.tiles.getAt(i * this.SIZE_X + j);
-                if (aget(j, i) == 0) {
-                    tile.tint = 0xFFFFFF;
-                    tile.alpha = 0.2;
-                } else {
-                    tile.alpha = 1;
+                var tile = this.tiles.getAt(i * this.SIZE_X + j);
+                if (tile instanceof Phaser.Sprite) {
+                    if (aget(j, i) == 0) {
+                        tile.tint = 0xFFFFFF;
+                        tile.alpha = 0.2;
+                    } else {
+                        tile.alpha = 1;
+                    }
+                    if (aget(j, i) == 1) tile.tint = 0xFFFFFF;
+                    if (aget(j, i) == 2) tile.tint = 0x0000FF;
+                    if (aget(j, i) == 3) tile.tint = 0xFF00FF;
+                    if (aget(j, i) == 4) tile.tint = 0xFFFF00;
+                    if (aget(j, i) == 5) tile.tint = 0xFF0000;
+                    if (aget(j, i) == 6) tile.tint = 0x00FFFF;
+                    if (aget(j, i) == 7) tile.tint = 0x00FF00;
                 }
-                if (aget(j, i) == 1) tile.tint = 0xFFFFFF;
-                if (aget(j, i) == 2) tile.tint = 0x0000FF;
-                if (aget(j, i) == 3) tile.tint = 0xFF00FF;
-                if (aget(j, i) == 4) tile.tint = 0xFFFF00;
-                if (aget(j, i) == 5) tile.tint = 0xFF0000;
-                if (aget(j, i) == 6) tile.tint = 0x00FFFF;
-                if (aget(j, i) == 7) tile.tint = 0x00FF00;
             }
         }
 

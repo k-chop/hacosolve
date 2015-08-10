@@ -14,7 +14,7 @@ var tsProject = ts.createProject('./tsconfig.json');
 gulp.task('default', ['jasmine']);
 
 gulp.task('build', ['compile'], function(){
-    return browserify('src/ts/output.js')
+    return browserify('src/js/output.js')
         .bundle()
         .pipe(source('bundle.js'))
         .pipe(gulp.dest('dest/'));
@@ -25,20 +25,21 @@ gulp.task('compile', function(){
 		.pipe(ts(tsProject));
 
     return tsResult.js
+            .pipe(gulp.dest('out/src/ts'))
 			.pipe(concat('output.js'))
-			.pipe(gulp.dest('src/ts'));
+			.pipe(gulp.dest('src/js'));
 });
 
 gulp.task('test-compile', ['compile'], function(){
-    var tsResult = gulp.src('spec/*.ts')
+    var tsResult = gulp.src('src/test/*.ts')
         .pipe(ts({
             module: 'commonjs'
         }));
-    return tsResult.js.pipe(gulp.dest('spec'));
+    return tsResult.js.pipe(gulp.dest('out/src/test'));
 });
 
 gulp.task('jasmine', ['test-compile'], function(){
-    return gulp.src('spec/*.js')
+    return gulp.src('out/src/test/*.js')
         .pipe(jasmine({
             verbose: true
         }));

@@ -1,6 +1,6 @@
-﻿/// <reference path="../src/typings/jasmine/jasmine.d.ts" />
+﻿/// <reference path="../typings/jasmine/jasmine.d.ts" />
 
-import s = require('../src/ts/Solver')
+import s = require('../ts/Solver')
 
 describe('NetOfCube', () => {
 

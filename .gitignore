@@ -3,6 +3,7 @@
 *.js.map
 bin/
 obj/
+out/
 web.*.config
 *.csproj
 *.csproj.user

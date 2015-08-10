@@ -5,8 +5,7 @@
 		"noImplicitAny": false,
 		"noEmitOnError": true,
 		"removeComments": true,
-		"sourceMap": false,
-		"out": "./output.js"
+		"sourceMap": false
 	},
 	"files": [
 		"src/typings/bundle.d.ts",

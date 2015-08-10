@@ -3,10 +3,6 @@
     {
       "url": "https://github.com/borisyankov/DefinitelyTyped.git",
       "ref": "master"
-    },
-    {
-      "url": "https://github.com/photonstorm/phaser.git",
-      "ref": "v2.3.0"
     }
   ],
   "path": "typings",
@@ -19,25 +15,28 @@
   "dependencies": {
     "phaser/phaser.d.ts": {
       "repo": "https://github.com/photonstorm/phaser.git",
-      "path": "typescript/phaser.d.ts"
+      "path": "typescript/phaser.d.ts",
+      "ref": "4b22f48c75eb08f46b3359181bad42ca5bce81b3"
     },
     "phaser/pixi.d.ts": {
       "repo": "https://github.com/photonstorm/phaser.git",
-      "path": "typescript/pixi.d.ts"
+      "path": "typescript/pixi.d.ts",
+      "ref": "4b22f48c75eb08f46b3359181bad42ca5bce81b3"
     },
     "phaser/p2.d.ts": {
       "repo": "https://github.com/photonstorm/phaser.git",
-      "path": "typescript/p2.d.ts"
+      "path": "typescript/p2.d.ts",
+      "ref": "4b22f48c75eb08f46b3359181bad42ca5bce81b3"
     },
     "gulp/gulp.d.ts": {
-      "ref": "066819c65ff561ca109955e0b725c253e243f0a2"
+      "ref": "3b0f362204ea965952dafdb682a5274d527ef9d0"
     },
     "gulp/gulp-typescript.d.ts": {
-      "ref": "066819c65ff561ca109955e0b725c253e243f0a2",
+      "ref": "3b0f362204ea965952dafdb682a5274d527ef9d0",
       "path": "gulp-typescript/gulp-typescript.d.ts"
     },
     "jasmine/jasmine.d.ts": {
-      "ref": "3e117d8c9ddf6443d7ed71a74f6bc8b6bcd36077"
+      "ref": "3b0f362204ea965952dafdb682a5274d527ef9d0"
     }
   }
 }

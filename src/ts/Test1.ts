@@ -22,14 +22,14 @@ export default class Test1 extends Phaser.State {
 
         // initialize
         this.cell = new Array(this.SIZE_Y * this.SIZE_X);
-        for (var i = 0; i < this.cell.length; i++) {
+        for (let i = 0; i < this.cell.length; i++) {
             this.cell[i] = 0;
         }
         this.accessor = util.makeAccessor(this.cell, this.SIZE_X);
 
         this.gen = new AutoGenerator(this.SIZE_X, this.SIZE_Y);
 
-        var set1 = this.accessor.setter(1);
+        const set1 = this.accessor.setter(1);
 
         // example
         set1(11, 10);
@@ -55,13 +55,13 @@ export default class Test1 extends Phaser.State {
         // (cell status) == (sprite)
         // cell[i][j] == tiles.getAt(i * SIZE_Y + j)
 
-        var aget = this.accessor.getter();
+        const aget = this.accessor.getter();
 
-        for (var i = 0; i < this.SIZE_Y; i++) {
-            for (var j = 0; j < this.SIZE_X; j++) {
-                var x = 0 + j * 12 - i * 12 + 400;
-                var y = 0 + i * 6 + j * 6 + 200;
-                var tile: Phaser.Sprite = this.tiles.create(x, y, 'tile');
+        for (let i = 0; i < this.SIZE_Y; i++) {
+            for (let j = 0; j < this.SIZE_X; j++) {
+                const x = 0 + j * 12 - i * 12 + 400;
+                const y = 0 + i * 6 + j * 6 + 200;
+                const tile: Phaser.Sprite = this.tiles.create(x, y, 'tile');
 
                 if (aget(j, i) == 0) {
                     tile.alpha = 0.2;
@@ -78,9 +78,9 @@ export default class Test1 extends Phaser.State {
         this.tiles.callAll('events.onInputDown.add', 'events.onInputDown', this.a, this);
 
         // button
-        var bSol = this.game.add.button(742, 570, 'button_solve', this.solve_start, this);
-        var bRes = this.game.add.button(742, 45, 'button_reset', this.cell_reset, this);
-        var bEra = this.game.add.button(742, 5, 'button_erase', this.cell_erase, this);
+        const bSol = this.game.add.button(742, 570, 'button_solve', this.solve_start, this);
+        const bRes = this.game.add.button(742, 45, 'button_reset', this.cell_reset, this);
+        const bEra = this.game.add.button(742, 5, 'button_erase', this.cell_erase, this);
 
         bSol.onInputOver.add(this.over, this);
         bSol.onInputDown.add(this.down, this);
@@ -98,9 +98,9 @@ export default class Test1 extends Phaser.State {
     }
 
     keyPress(char: string) {
-        var c: number = parseInt(char, 10);
+        const c: number = parseInt(char, 10);
         if (!isNaN(c)) { // 0-9
-            var msg = "auto-generate: " + c;
+            const msg = "auto-generate: " + c;
             this.tips = msg
             console.log(msg);
             this.generate(c);
@@ -122,14 +122,14 @@ export default class Test1 extends Phaser.State {
     }
 
     generate(n: number) {
-        var ns = this.gen.generate(n);
-        for (var i = 0; i < ns.length; i++) this.cell[i] = ns[i];
+        const ns = this.gen.generate(n);
+        for (let i = 0; i < ns.length; i++) this.cell[i] = ns[i];
         this.coloring();
     }
 
     a(item: Phaser.Sprite) {
-        var i = (2 * item.y - item.x) / 24;
-        var j = (item.x + 2 * item.y - 800) / 24;
+        const i = (2 * item.y - item.x) / 24;
+        const j = (item.x + 2 * item.y - 800) / 24;
         if (item.alpha < 0.21) {
             item.alpha = 1;
             this.cell[i * this.SIZE_X + j] = 1;
@@ -141,7 +141,7 @@ export default class Test1 extends Phaser.State {
     }
 
     cell_erase() {
-        for (var i = 0; i < this.cell.length; i++) {
+        for (let i = 0; i < this.cell.length; i++) {
             this.cell[i] = 0;
         }
         this.tips = "erased.";
@@ -149,7 +149,7 @@ export default class Test1 extends Phaser.State {
     }
 
     cell_reset() {
-        for (var i = 0; i < this.cell.length; i++) {
+        for (let i = 0; i < this.cell.length; i++) {
             if (this.cell[i] != 0) {
                 this.cell[i] = 1;
             }
@@ -169,8 +169,8 @@ export default class Test1 extends Phaser.State {
             return;
         }
 
-        var el = new Date().getTime();
-        var s = new Solver();
+        const el = new Date().getTime();
+        const s = new Solver();
         s.solve(this.cell, this.SIZE_X, this.aaa, this);
         if (s.solution == null) {
             if (s.message != '') {
@@ -180,10 +180,10 @@ export default class Test1 extends Phaser.State {
                 this.tips = "cannot solve..."
                 console.log(this.tips);
             }
-            for (var i = 0; i < this.cell.length; i++) if (this.cell[i] != 0) this.cell[i] = 5;
+            for (let i = 0; i < this.cell.length; i++) if (this.cell[i] != 0) this.cell[i] = 5;
         } else {
             console.log("solved!")
-            for (var i = 0; i < this.cell.length; i++) {
+            for (let i = 0; i < this.cell.length; i++) {
                 this.cell[i] = s.solution[i];
             }
             this.tips = 'found ' + s.foundCubeCount + ' cubes. ' + 'time: ' + ((new Date().getTime() - el) / 1000) + 's';
@@ -204,11 +204,11 @@ export default class Test1 extends Phaser.State {
     }
 
     coloring() {
-        var aget = this.accessor.getter();
+        const aget = this.accessor.getter();
 
-        for (var i = 0; i < this.SIZE_Y; i++) {
-            for (var j = 0; j < this.SIZE_X; j++) {
-                var tile = this.tiles.getAt(i * this.SIZE_X + j);
+        for (let i = 0; i < this.SIZE_Y; i++) {
+            for (let j = 0; j < this.SIZE_X; j++) {
+                const tile = this.tiles.getAt(i * this.SIZE_X + j);
                 if (tile instanceof Phaser.Sprite) {
                     if (aget(j, i) == 0) {
                         tile.tint = 0xFFFFFF;

@@ -4,10 +4,10 @@ export default class MainMenu extends Phaser.State {
 
     create() {
 
-        var fx = this.add.audio('start');
+        const fx = this.add.audio('start');
         fx.play();
 
-        var logo = this.add.sprite(this.world.centerX, this.world.centerY - 100, 'logo');
+        const logo = this.add.sprite(this.world.centerX, this.world.centerY - 100, 'logo');
         logo.anchor.setTo(0.5, 0.5);
 
         this.input.onDown.add(this.startGame, this);

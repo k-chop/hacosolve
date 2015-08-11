@@ -69,14 +69,14 @@ export class NetOfCube {
     // 同じ形状のピースを除いた全ての候補のリストを返す
     allCandidates(): Piece[] {
 
-        var all: Piece[] = [];
-        for (var i = 0; i < this.pieces.length; i++) {
+        let all: Piece[] = [];
+        for (let i = 0; i < this.pieces.length; i++) {
             all = all.concat(this.pieces[i].variations());
         }
 
-        var dist: Piece[] = [], comp: number[] = [];
-        for (var i = 0; i < all.length; i++) {
-            var hash = all[i].internalNumber;
+        let dist: Piece[] = [], comp: number[] = [];
+        for (let i = 0; i < all.length; i++) {
+            let hash = all[i].internalNumber;
             if (comp.indexOf(hash) == -1) {
                 dist.push(all[i]);
                 comp.push(hash);
@@ -106,7 +106,7 @@ export class Piece {
     }
 
     static calcInternalNumber(arr: boolean[], width: number): number {
-        var ret = 0, e = 1, idx = arr.length - 1;
+        let ret = 0, e = 1, idx = arr.length - 1;
         while (0 <= idx) {
             if (arr[idx]) ret += e;
             e = e << 1;
@@ -120,8 +120,8 @@ export class Piece {
 
     static fromString(pattern: string, width: number): Piece {
         // string -> boolean[]
-        var ns = new Array<boolean>(pattern.length);
-        for (var i = 0; i < pattern.length; i++) {
+        let ns = new Array<boolean>(pattern.length);
+        for (let i = 0; i < pattern.length; i++) {
             if (pattern[i] != ' ') {
                 ns[i] = true;
             } else {
@@ -141,7 +141,7 @@ export class Piece {
 
     // 自身を90/180/270度回転したものとそれぞれの鏡像を作り、リストにぶち込んで返す
     variations(): Piece[] {
-        var ret = new Array<Piece>(8);
+        let ret = new Array<Piece>(8);
 
         // self
         ret[0] = this;
@@ -171,14 +171,14 @@ export class Piece {
 
     // 
     matchN(ns: number[], nsWidth: number, x: number, y: number): number {
-        var h = ns.length / nsWidth | 0;
-        var tileCheck = 0;
+        const h = ns.length / nsWidth | 0;
+        let tileCheck = 0;
 
         if (nsWidth < x + this.width || h < y + this.height) return -1;
 
-        for (var i = 0; i < this.height; i++) {
-            for (var j = 0; j < this.width; j++) {
-                var n = ns[(y + i) * nsWidth + (x + j)];
+        for (let i = 0; i < this.height; i++) {
+            for (let j = 0; j < this.width; j++) {
+                const n = ns[(y + i) * nsWidth + (x + j)];
 
                 if (this.internal[i * this.width + j] && n != 0) return -1;
 
@@ -190,12 +190,12 @@ export class Piece {
 
     //matchF(ns: number[], nsWidth: number, x: number, y: number, f: (n: number) => boolean): boolean {
     match(ns: number[], nsWidth: number, x: number, y: number): boolean {
-        var h = ns.length / nsWidth | 0;
+        const h = ns.length / nsWidth | 0;
 
         if (nsWidth < x + this.width || h < y + this.height) return false;
 
-        for (var i = 0; i < this.height; i++) {
-            for (var j = 0; j < this.width; j++) {
+        for (let i = 0; i < this.height; i++) {
+            for (let j = 0; j < this.width; j++) {
                 if (this.internal[i * this.width + j]) {
                     if (ns[(y + i) * nsWidth + (x + j)] != 1) {
                         return false;
@@ -209,9 +209,9 @@ export class Piece {
 
     filled(ns: number[], nsWidth: number, x: number, y: number, fillNumber: number): number[] {
 
-        var ret = [].concat(ns);
-        for (var i = 0; i < this.height; i++) {
-            for (var j = 0; j < this.width; j++) {
+        let ret = [].concat(ns);
+        for (let i = 0; i < this.height; i++) {
+            for (let j = 0; j < this.width; j++) {
                 if (this.internal[i * this.width + j]) {
                     ret[(y + i) * nsWidth + (x + j)] = fillNumber;
                 }
@@ -223,12 +223,12 @@ export class Piece {
     // このピースの鏡像を返す
     mirrored(): Piece {
 
-        var l = this.internal.length;
-        var ns = new Array<boolean>(l);
-        var w = this.width;
+        const l = this.internal.length;
+        let ns = new Array<boolean>(l);
+        const w = this.width;
 
-        for (var i = w; i <= l; i += w) {
-            for (var j = i - 1, k = i - w; k < i; j-- , k++) {
+        for (let i = w; i <= l; i += w) {
+            for (let j = i - 1, k = i - w; k < i; j-- , k++) {
                 ns[k] = this.internal[j];
             }
         }
@@ -238,13 +238,13 @@ export class Piece {
     // このピースを右に90度回転したものを返す
     rotated90(): Piece {
 
-        var l = this.internal.length;
-        var ns = new Array<boolean>(l);
-        var w = this.width;
-        var h = this.height;
+        const l = this.internal.length;
+        let ns = new Array<boolean>(l);
+        const w = this.width;
+        const h = this.height;
 
-        for (var i = l - w, k = 0; i < l; i++) {
-            for (var j = i; j >= 0; j -= w, k++) {
+        for (let i = l - w, k = 0; i < l; i++) {
+            for (let j = i; j >= 0; j -= w, k++) {
                 ns[k] = this.internal[j];
             }
         }
@@ -255,8 +255,8 @@ export class Piece {
     // デバッグ出力用
     toString() {
 
-        var ret = '\n';
-        for (var i = 0; i < this.internal.length; i++) {
+        let ret = '\n';
+        for (let i = 0; i < this.internal.length; i++) {
             if (this.internal[i]) {
                 ret += '#';
             } else {
@@ -291,19 +291,19 @@ export class Solver {
 
         this.solution = undefined;
         // ns contains 0 or 1 only
-        var sumTiles = ns.reduce((p, c, i, a) => p + c)
+        let sumTiles = ns.reduce((p, c, i, a) => p + c)
         // cant solve
         if (sumTiles % 6 != 0) {
-            var mes = 'sum of tiles is ' + sumTiles + '. cant solve because cannot mod 6.';
+            let mes = 'sum of tiles is ' + sumTiles + '. cant solve because cannot mod 6.';
             this.message = mes;
             console.log(mes)
             return ns;
         }
 
         // bounds
-        var h = ns.length / width | 0;
-        var sy = h, sx = width, lx = 0, ly = 0;
-        for (var i = 0; i < ns.length; i++) {
+        const h = ns.length / width | 0;
+        let sy = h, sx = width, lx = 0, ly = 0;
+        for (let i = 0; i < ns.length; i++) {
             if (ns[i] == 1) {
                 sy = Math.min(sy, i / width | 0);
                 sx = Math.min(sx, i % width | 0);
@@ -316,9 +316,9 @@ export class Solver {
         this.skipCache = new Array<boolean>(ns.length);
         this.skipCacheHit = 0;
 
-        var tileCount = sumTiles / 6 | 0;
+        const tileCount = sumTiles / 6 | 0;
         console.log("start! cube count: " + tileCount);
-        var ret = this.solve1(this.copy(ns), width, tileCount, tileCount, 2, sx, sy, sx, sy, lx, ly, callback, context);
+        let ret = this.solve1(this.copy(ns), width, tileCount, tileCount, 2, sx, sy, sx, sy, lx, ly, callback, context);
         console.log("skip_cache_hit: " + this.skipCacheHit);
 
         if (this.solution != undefined) {
@@ -335,12 +335,12 @@ export class Solver {
             return true;
         }
 
-        var emptyN = 0, tileN = 0, filledTileN = 0;
-        var h = ns.length / width | 0;
-        var xe = Math.min(width, xx + 5);
-        var ye = Math.min(h, yy + 5);
-        for (var i = xx; i < xe; i++) {
-            for (var j = yy; j < ye; j++) {
+        let emptyN = 0, tileN = 0, filledTileN = 0;
+        const h = ns.length / width | 0;
+        const xe = Math.min(width, xx + 5);
+        const ye = Math.min(h, yy + 5);
+        for (let i = xx; i < xe; i++) {
+            for (let j = yy; j < ye; j++) {
                 if (ns[j * width + i] == 1) {
                     tileN++;
                 } else if (ns[j * width + i] == 0) {
@@ -360,15 +360,15 @@ export class Solver {
 
     // 一番左上にあるタイルに隣接したタイルが6つより少ないかどうか
     cutoffCheck(ns: number[], width: number): boolean {
-        var cnt = 0;
-        var st = ns.indexOf(1)
+        let cnt = 0;
+        const st = ns.indexOf(1)
         if (st == -1) return true;
-        var i = st / width | 0, j = st % width;
-        var height = ns.length / width | 0;
+        let i = st / width | 0, j = st % width;
+        const height = ns.length / width | 0;
 
         //console.log("a");
-        var mark = new Array<boolean>(ns.length);
-        var recur = function (x: number, y: number): number {
+        let mark = new Array<boolean>(ns.length);
+        const recur = function (x: number, y: number): number {
             //console.log("chk x:" + x + ", y:" + y);
             if (0 <= x && x < width && 0 <= y && y < height && !mark[y * width + x]) {
                 mark[y * width + x] = true;
@@ -377,7 +377,7 @@ export class Solver {
                 } else { return 0; }
             } else { return 0; }
         }
-        var c = recur(j, i);
+        const c = recur(j, i);
         //console.log("c: "+c);
         return c < 6;
     }
@@ -394,19 +394,19 @@ export class Solver {
             fillNum = 2;
         }
 
-        var h = ns.length / width | 0;
-        var w = width;
-        var len = h * w;
+        const h = ns.length / width | 0;
+        const w = width;
+        const len = h * w;
 
         if (count != countMax && this.cutoffCheck(ns, width)) {
             //console.log("-------cutoff!");
             return ns;
         }
 
-        var nextX = nx, nextY = ny;
+        const nextX = nx, nextY = ny;
 
-        for (var y = sy; y < ly; y++) {
-            for (var x = sx; x < lx; x++) {
+        for (let y = sy; y < ly; y++) {
+            for (let x = sx; x < lx; x++) {
 
                 if (nx != -1 && ny != -1) {
                     //console.log("nxy init. start from " + nx + "," + ny);
@@ -424,11 +424,11 @@ export class Solver {
 
                 //console.log("count:" + count + ", chk(" + x + ", " + y + ") sxy["+sx+", "+sy+"]");
 
-                var all = this.net.all;
-                for (var i = 0; i < all.length; i++) {
+                const all = this.net.all;
+                for (let i = 0; i < all.length; i++) {
                     if (this.solution == undefined && all[i].match(ns, w, x, y)) {
                         //console.log("count "+count+", at "+x+","+y+": matched "+all[i].internal_number+""+all[i].toString())
-                        var a = all[i].filled(ns, w, x, y, fillNum);
+                        const a = all[i].filled(ns, w, x, y, fillNum);
                         if (count == 1) { // found solution
                             this.solution = this.copy(a);
                             ns = a;

@@ -4,5 +4,5 @@ import Game from "./Game"
 
 window.onload = () => {
 
-    var game = new Game();
+    const game = new Game();
 };

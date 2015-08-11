@@ -9,7 +9,7 @@ export class AutoGenerator {
     field: number[];
     width: number;
     height: number;
-    SIZE_LIMIT = 20;
+    SIZE_LIMIT = 100;
 
     accessor: util.XYAccessWrapper<number>;
 

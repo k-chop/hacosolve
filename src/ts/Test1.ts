@@ -75,7 +75,7 @@ export default class Test1 extends Phaser.State {
         // events
         this.tiles.setAll('inputEnabled', true);
         this.tiles.setAll('input.pixelPerfectClick', true);
-        this.tiles.callAll('events.onInputDown.add', 'events.onInputDown', this.a, this);
+        this.tiles.callAll('events.onInputDown.add', 'events.onInputDown', this.cellClicked, this);
 
         // button
         const bSol = this.game.add.button(742, 570, 'button_solve', this.solve_start, this);
@@ -127,14 +127,16 @@ export default class Test1 extends Phaser.State {
         this.coloring();
     }
 
-    a(item: Phaser.Sprite) {
+    cellClicked(item: Phaser.Sprite) {
         const i = (2 * item.y - item.x) / 24;
         const j = (item.x + 2 * item.y - 800) / 24;
         if (item.alpha < 0.21) {
-            item.alpha = 1;
+            this.game.add.tween(item).to({ alpha: 1 }, 200, Phaser.Easing.Linear.None, true);
+            //item.alpha = 1;
             this.cell[i * this.SIZE_X + j] = 1;
         } else {
-            item.alpha = 0.2;
+            this.game.add.tween(item).to({ alpha: 0.2 }, 200, Phaser.Easing.Linear.None, true);
+            //item.alpha = 0.2;
             this.cell[i * this.SIZE_X + j] = 0;
         }
         console.log("xy(" + item.x + ", " + item.y + ") -> ij(" + i + ", " + j + ")");

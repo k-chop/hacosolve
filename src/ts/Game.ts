@@ -1,11 +1,11 @@
 ﻿/// <reference path="../typings/bundle.d.ts" />
 
-import Boot = require('./Boot')
-import Preloader = require('./Preloader')
-import MainMenu = require('./MainMenu')
-import Test1 = require('./Test1')
+import Boot from "./Boot"
+import Preloader from "./Preloader"
+import MainMenu from "./MainMenu"
+import Test1 from "./Test1"
 
-class Game extends Phaser.Game {
+export default class Game extends Phaser.Game {
 
     constructor() {
 
@@ -20,4 +20,3 @@ class Game extends Phaser.Game {
     }
 }
 
-export = Game;

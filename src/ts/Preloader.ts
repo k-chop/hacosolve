@@ -1,6 +1,6 @@
 ﻿/// <reference path="../typings/bundle.d.ts" />
 
-class Preloader extends Phaser.State {
+export default class Preloader extends Phaser.State {
 
     preload() {
         //  Load our actual games assets
@@ -26,5 +26,3 @@ class Preloader extends Phaser.State {
 
     }
 }
-
-export = Preloader;

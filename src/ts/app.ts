@@ -1,6 +1,6 @@
 ﻿/// <reference path="../typings/bundle.d.ts" />
 
-import Game = require('./Game');
+import Game from "./Game"
 
 window.onload = () => {
 

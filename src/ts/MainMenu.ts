@@ -1,6 +1,6 @@
 ﻿/// <reference path="../typings/bundle.d.ts" />
 
-class MainMenu extends Phaser.State {
+export default class MainMenu extends Phaser.State {
 
     create() {
 
@@ -18,5 +18,3 @@ class MainMenu extends Phaser.State {
         this.game.state.start('Test1', true, false);
     }
 }
-
-export = MainMenu;

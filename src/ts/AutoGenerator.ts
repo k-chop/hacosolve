@@ -1,11 +1,11 @@
 ﻿/// <reference path="../typings/bundle.d.ts" />
 
-import util = require('./util')
-import s = require('./Solver')
+import * as util from "./util"
+import { NetOfCube } from "./Solver"
 
 export class AutoGenerator {
 
-    net: s.NetOfCube;
+    net: NetOfCube;
     field: number[];
     width: number;
     height: number;
@@ -14,7 +14,7 @@ export class AutoGenerator {
     accessor: util.XYAccessWrapper<number>;
 
     constructor(width: number, height: number) {
-        this.net = new s.NetOfCube();
+        this.net = new NetOfCube();
         this.width = Math.min(width, this.SIZE_LIMIT);
         this.height = Math.min(height, this.SIZE_LIMIT);
         this.field = new Array<number>(width * height);

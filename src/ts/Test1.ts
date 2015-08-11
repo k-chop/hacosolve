@@ -1,17 +1,17 @@
 ﻿/// <reference path="../typings/bundle.d.ts" />
 
-import util = require('./util')
-import a = require('./AutoGenerator')
-import solver = require('./Solver')
+import * as util from "./util"
+import { AutoGenerator } from "./AutoGenerator"
+import { Solver } from "./Solver"
 
-class Test1 extends Phaser.State {
+export default class Test1 extends Phaser.State {
 
     cell: number[];
     tiles: Phaser.Group;
     SIZE_X = 20;
     SIZE_Y = 20;
     accessor: util.XYAccessWrapper<number>;
-    gen: a.AutoGenerator;
+    gen: AutoGenerator;
 
     tips: string;
 
@@ -27,7 +27,7 @@ class Test1 extends Phaser.State {
         }
         this.accessor = util.makeAccessor(this.cell, this.SIZE_X);
 
-        this.gen = new a.AutoGenerator(this.SIZE_X, this.SIZE_Y);
+        this.gen = new AutoGenerator(this.SIZE_X, this.SIZE_Y);
 
         var set1 = this.accessor.setter(1);
 
@@ -170,7 +170,7 @@ class Test1 extends Phaser.State {
         }
 
         var el = new Date().getTime();
-        var s = new solver.Solver();
+        var s = new Solver();
         s.solve(this.cell, this.SIZE_X, this.aaa, this);
         if (s.solution == null) {
             if (s.message != '') {
@@ -229,5 +229,3 @@ class Test1 extends Phaser.State {
 
     }
 }
-
-export = Test1;

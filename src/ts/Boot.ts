@@ -1,6 +1,6 @@
 ﻿/// <reference path="../typings/bundle.d.ts" />
 
-class Boot extends Phaser.State {
+export default class Boot extends Phaser.State {
 
     preload() {
         this.load.image('preloadBar', 'assets/image/loadbar.png');
@@ -27,4 +27,3 @@ class Boot extends Phaser.State {
 
 }
 
-export = Boot;

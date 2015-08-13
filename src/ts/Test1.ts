@@ -15,6 +15,9 @@ export default class Test1 extends Phaser.State {
 
     tips: string;
 
+    fxOpen: Phaser.Sound;
+    fxClose: Phaser.Sound;
+
     create() {
 
         this.tips = undefined;
@@ -95,6 +98,10 @@ export default class Test1 extends Phaser.State {
         // key
         this.game.input.keyboard.addCallbacks(this, null, null, this.keyPress);
 
+        //sound
+        this.fxOpen = this.add.audio('open');
+        this.fxClose = this.add.audio('close');
+
     }
 
     keyPress(char: string) {
@@ -131,10 +138,12 @@ export default class Test1 extends Phaser.State {
         const i = (2 * item.y - item.x) / 24;
         const j = (item.x + 2 * item.y - 800) / 24;
         if (item.alpha < 0.21) {
+            this.fxOpen.play();
             this.game.add.tween(item).to({ alpha: 1 }, 200, Phaser.Easing.Linear.None, true);
             //item.alpha = 1;
             this.cell[i * this.SIZE_X + j] = 1;
         } else {
+            this.fxClose.play();
             this.game.add.tween(item).to({ alpha: 0.2 }, 200, Phaser.Easing.Linear.None, true);
             //item.alpha = 0.2;
             this.cell[i * this.SIZE_X + j] = 0;

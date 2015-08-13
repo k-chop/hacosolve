@@ -11,6 +11,8 @@ export default class Preloader extends Phaser.State {
         this.load.image('button_erase', 'assets/image/button_erase.png');
 
         this.load.audio('start', 'assets/sound/c_cursor02.ogg');
+        this.load.audio('open', 'assets/sound/open.ogg');
+        this.load.audio('close', 'assets/sound/close.ogg');
 
         this.load.onLoadComplete.add(this.loadComplete, this);
     }

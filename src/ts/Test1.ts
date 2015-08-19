@@ -3,6 +3,7 @@
 import * as util from "./util"
 import { AutoGenerator } from "./AutoGenerator"
 import { Solver } from "./Solver"
+import { Promise } from "es6-promise"
 
 export default class Test1 extends Phaser.State {
 

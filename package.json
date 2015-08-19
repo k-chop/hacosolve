@@ -8,6 +8,7 @@
   "devDependencies": {
     "browserify": "^10.2.4",
     "dtsm": "0.10.3",
+    "es6-promise": "^3.0.2",
     "gulp": "3.9.0",
     "gulp-concat": "^2.5.2",
     "gulp-jasmine": "^2.0.1",

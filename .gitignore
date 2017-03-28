@@ -4,6 +4,6 @@
 *.d.ts
 web.config
 node_modules/
-dist/
 !dist/index.html
+dist/*/
 tmp/

@@ -47,11 +47,13 @@ export class Tile {
         this.sprite.on('pointerdown', (ev: any) => {
             const target: PIXI.Sprite = ev.target;
             console.log(`Pressed id ${id} tile.`);
-            if (this.state !== 0) {
+            if (this.prevState !== 0) {
                 this.state = 0;
             } else {
                 this.state = 1;
             }
+            this.prevState = this.state;
+            this.coloring();
         });
         this.sprite.x = x;
         this.sprite.y = y;

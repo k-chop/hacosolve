@@ -51,7 +51,7 @@ export class InitScene extends Scene {
             }
         }
         this.initializeBoard();
-        this.solveStart();
+        //this.solveStart();
     }
 
     public destroy(): void {

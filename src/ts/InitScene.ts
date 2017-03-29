@@ -10,7 +10,6 @@ import * as util from './util';
  */
 export class InitScene extends Scene {
 
-    public cell: number[];
     public SIZE_X = 20;
     public SIZE_Y = 20;
     public accessor: util.XYAccessWrapper<number>;
@@ -28,21 +27,16 @@ export class InitScene extends Scene {
     }
 
     public update(): void {
-        //for (let idx = 0; idx < this.cell.length; idx += 1) {
-        //    this.cell[idx] = Math.floor(Math.random() * 7);
+        // RAINBOOOOOW!!!!
+        //
+        //for (const tile of this.tiles) {
+        //    tile.state = Math.floor(Math.random() * 7);
         //}
         //this.coloring();
     }
 
     public async create() {
         await this.load();
-
-        const hitBox = new PIXI.Polygon(
-            13, 0,
-            0, 7,
-            13, 13,
-            26, 7
-        );
 
         for (let col = 0; col < this.SIZE_Y; col += 1) {
             for (let row = 0; row < this.SIZE_X; row += 1) {
@@ -57,7 +51,7 @@ export class InitScene extends Scene {
             }
         }
         this.initializeBoard();
-        //this.solveStart();
+        this.solveStart();
     }
 
     public destroy(): void {
@@ -74,8 +68,10 @@ export class InitScene extends Scene {
     }
 
     private solveStart() {
-        if (this.cell.indexOf(1) === -1) {
-            if (this.cell.indexOf(2) !== -1 || this.cell.indexOf(5) !== -1) {
+        const isFresh = this.tiles.every((tile) => tile.state === 0 || tile.state === 1);
+        if (!isFresh) {
+            const dunno = this.tiles.some((tile) => tile.state === 2 || tile.state === 5)
+            if (dunno) {
                 this.tips = 'You need reset!';
             } else {
                 this.tips = 'Place tiles with click, or press number key for auto-generate.';
@@ -84,7 +80,8 @@ export class InitScene extends Scene {
         }
         const beforeTime = new Date().getTime();
         const solver = new Solver();
-        solver.solve(this.cell, this.SIZE_X, () => {}, this);
+        const numbers = this.tiles.map((tile) => tile.state);
+        solver.solve(numbers, this.SIZE_X, () => {}, this);
         if (solver.solution == null) {
             if (solver.message !== '') {
                 this.tips = solver.message;
@@ -93,13 +90,13 @@ export class InitScene extends Scene {
                 this.tips = 'cannot solve...';
                 console.log(this.tips);
             }
-            for (let idx = 0; idx < this.cell.length; idx += 1) {
-                if (this.cell[idx] !== 0) { this.cell[idx] = 5; }
+            for (const tile of this.tiles) {
+                if (tile.state !== 0) { tile.state = 5; }
             }
         } else {
             console.log('solved!');
-            for (let idx = 0; idx < this.cell.length; idx += 1) {
-                this.cell[idx] = solver.solution[idx];
+            for (let idx = 0; idx < this.tiles.length; idx += 1) {
+                this.tiles[idx].state = solver.solution[idx];
             }
             const elaspedTime = (new Date().getTime() - beforeTime) / 1000;
             this.tips = `Found ${solver.foundCubeCount} cubes. elasped time: ${elaspedTime} sec`;
@@ -108,11 +105,6 @@ export class InitScene extends Scene {
     }
 
     private initializeBoard() {
-        this.cell = new Array(this.SIZE_Y * this.SIZE_X);
-        for (let idx = 0; idx < this.cell.length; idx += 1) {
-            this.cell[idx] = 0;
-        }
-        this.accessor = util.makeAccessor(this.cell, this.SIZE_X);
         this.gen = new AutoGenerator(this.SIZE_X, this.SIZE_Y);
         this.generate(5);
     }
@@ -120,15 +112,14 @@ export class InitScene extends Scene {
     private generate(cubeNum: number) {
         const ns = this.gen.generate(cubeNum);
         for (let idx = 0; idx < ns.length; idx += 1) {
-            this.cell[idx] = ns[idx];
             this.tiles[idx].state = ns[idx];
         }
         this.coloring();
     }
 
     private coloring() {
-        for (let idx = 0; idx < this.tiles.length; idx += 1) {
-            this.tiles[idx].coloring(this.cell[idx]);
+        for (const tile of this.tiles) {
+            tile.coloring();
         }
     }
 }

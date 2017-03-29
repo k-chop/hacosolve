@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-const HITBOX = new PIXI.Polygon(
+const TILE_HITBOX = new PIXI.Polygon(
     13, 0,
     0, 7,
     13, 13,
@@ -31,7 +31,7 @@ export class Tile {
 
     constructor(id: number, sprite: PIXI.Sprite, x: number, y: number) {
         this.sprite = sprite;
-        this.sprite.hitArea = HITBOX;
+        this.sprite.hitArea = TILE_HITBOX;
         this.sprite.interactive = true;
         this.sprite.on('mouseover', (ev: any) => {
             const target: PIXI.Sprite = ev.target;

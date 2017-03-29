@@ -112,7 +112,7 @@ export class Solver {
                     return 1 + recur(x + 1, y) + recur(x, y + 1) + recur(x, y - 1) + recur(x - 1, y);
                 } else { return 0; }
             } else { return 0; }
-        }
+        };
         const c = recur(j, i);
         return c < 6;
     }
@@ -130,7 +130,8 @@ export class Solver {
         lx: number,
         ly: number,
         callback: any,
-        context: any): number[] {
+        context: any
+    ): number[] {
 
         if (count === 1) {
             //console.log("at last!!");

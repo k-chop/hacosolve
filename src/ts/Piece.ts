@@ -186,5 +186,4 @@ export class Piece {
         }
         return ret;
     }
-
 }

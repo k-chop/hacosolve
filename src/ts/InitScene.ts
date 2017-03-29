@@ -76,7 +76,7 @@ export class InitScene extends Scene {
     private solveStart() {
         const isFresh = this.tiles.every((tile) => tile.state === 0 || tile.state === 1);
         if (!isFresh) {
-            const dunno = this.tiles.some((tile) => tile.state === 2 || tile.state === 5)
+            const dunno = this.tiles.some((tile) => tile.state === 2 || tile.state === 5);
             if (dunno) {
                 this.tips = 'You need reset!';
             } else {

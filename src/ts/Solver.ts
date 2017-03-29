@@ -17,7 +17,7 @@ export class Solver {
         this.foundCubeCount = 0;
     }
 
-    public solve(ns: number[], width: number, callback: any, context: any): number[] {
+    public solve(ns: number[], width: number): number[] {
 
         this.solution = undefined;
         // ns contains 0 or 1 only
@@ -51,7 +51,7 @@ export class Solver {
 
         const tileCount = sumTiles / 6 | 0;
         console.log(`start! cube count: ${tileCount}`);
-        const ret = this.solve1(this.copy(ns), width, tileCount, tileCount, 2, sx, sy, sx, sy, lx, ly, callback, context);
+        const ret = this.solve1(this.copy(ns), width, tileCount, tileCount, 2, sx, sy, sx, sy, lx, ly);
         console.log(`skip_cache_hit: ${this.skipCacheHit}`);
 
         if (this.solution !== undefined) {
@@ -128,9 +128,7 @@ export class Solver {
         nx: number,
         ny: number,
         lx: number,
-        ly: number,
-        callback: any,
-        context: any
+        ly: number
     ): number[] {
 
         if (count === 1) {
@@ -185,7 +183,7 @@ export class Solver {
                             return ns;
                         } else {
                             //console.log("stack------")
-                            this.solve1(a, w, count - 1, countMax, fillNum + 1, sx, sy, x, y, lx, ly, callback, context);
+                            this.solve1(a, w, count - 1, countMax, fillNum + 1, sx, sy, x, y, lx, ly);
                         }
                     }
                 }

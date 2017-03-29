@@ -56,21 +56,21 @@ export class Tile {
         }
     }
 
-    private onMouseOver = (ev: any): void => {
-        const target: PIXI.Sprite = ev.target;
+    private onMouseOver = (ev: { target: PIXI.Sprite }): void => {
+        const target = ev.target;
         this.prevState = this.currentState;
         this.currentState = 7;
         this.coloring();
     }
 
-    private onMouseOut = (ev: any): void => {
+    private onMouseOut = (ev: { currentTarget: PIXI.Sprite }): void => {
         const target: PIXI.Sprite = ev.currentTarget;
         this.currentState = this.prevState;
         this.coloring();
     }
 
-    private onPointerDown = (ev: any): void => {
-        const target: PIXI.Sprite = ev.target;
+    private onPointerDown = (ev: { target: PIXI.Sprite }): void => {
+        const target = ev.target;
         console.log(`Pressed id ${this.id} tile.`);
         if (this.prevState !== 0) {
             this.state = 0;

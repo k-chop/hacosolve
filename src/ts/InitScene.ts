@@ -52,7 +52,7 @@ export class InitScene extends Scene {
         }
         const solveButton = this.spriteLoader.sprite('btn_solve');
         solveButton.interactive = true;
-        solveButton.on('pointerdown', (ev: any) => {
+        solveButton.on('pointerdown', (ev: {}) => {
             this.solveStart();
         });
         this.container.addChild(solveButton);
@@ -87,7 +87,7 @@ export class InitScene extends Scene {
         const beforeTime = new Date().getTime();
         const solver = new Solver();
         const numbers = this.tiles.map((tile) => tile.state);
-        solver.solve(numbers, this.SIZE_X, () => {}, this);
+        solver.solve(numbers, this.SIZE_X);
         if (solver.solution == null) {
             if (solver.message !== '') {
                 this.tips = solver.message;

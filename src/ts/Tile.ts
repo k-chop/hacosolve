@@ -19,6 +19,7 @@ const STATE_COLOR_MAP: { [state: number]: number } = {
 
 export class Tile {
 
+    public id: number;
     public sprite: PIXI.Sprite;
     private currentState: number;
     private prevState: number;
@@ -30,33 +31,40 @@ export class Tile {
     }
 
     constructor(id: number, sprite: PIXI.Sprite, x: number, y: number) {
+        this.id = id;
         this.sprite = sprite;
         this.sprite.hitArea = TILE_HITBOX;
         this.sprite.interactive = true;
-        this.sprite.on('mouseover', (ev: any) => {
-            const target: PIXI.Sprite = ev.target;
-            this.prevState = this.currentState;
-            this.currentState = 7;
-            this.coloring();
-        });
-        this.sprite.on('mouseout', (ev: any) => {
-            const target: PIXI.Sprite = ev.currentTarget;
-            this.currentState = this.prevState;
-            this.coloring();
-        });
-        this.sprite.on('pointerdown', (ev: any) => {
-            const target: PIXI.Sprite = ev.target;
-            console.log(`Pressed id ${id} tile.`);
-            if (this.prevState !== 0) {
-                this.state = 0;
-            } else {
-                this.state = 1;
-            }
-            this.prevState = this.state;
-            this.coloring();
-        });
+        this.sprite.on('mouseover', this.onMouseOver);
+        this.sprite.on('mouseout', this.onMouseOut);
+        this.sprite.on('pointerdown', this.onPointerDown);
         this.sprite.x = x;
         this.sprite.y = y;
+    }
+
+    private onMouseOver = (ev: any): void => {
+        const target: PIXI.Sprite = ev.target;
+        this.prevState = this.currentState;
+        this.currentState = 7;
+        this.coloring();
+    }
+
+    private onMouseOut = (ev: any): void => {
+        const target: PIXI.Sprite = ev.currentTarget;
+        this.currentState = this.prevState;
+        this.coloring();
+    }
+
+    private onPointerDown = (ev: any): void => {
+        const target: PIXI.Sprite = ev.target;
+        console.log(`Pressed id ${this.id} tile.`);
+        if (this.prevState !== 0) {
+            this.state = 0;
+        } else {
+            this.state = 1;
+        }
+        this.prevState = this.state;
+        this.coloring();
     }
 
     public coloring(state: number = this.currentState) {

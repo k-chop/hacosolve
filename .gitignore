@@ -4,5 +4,5 @@
 *.d.ts
 web.config
 node_modules/
-dist/*/
+dist/
 tmp/

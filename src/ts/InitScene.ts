@@ -50,6 +50,12 @@ export class InitScene extends Scene {
                 this.tiles[idx] = tile;
             }
         }
+        const solveButton = this.spriteLoader.sprite('btn_solve');
+        solveButton.interactive = true;
+        solveButton.on('pointerdown', (ev: any) => {
+            this.solveStart();
+        });
+        this.container.addChild(solveButton);
         this.initializeBoard();
         //this.solveStart();
     }

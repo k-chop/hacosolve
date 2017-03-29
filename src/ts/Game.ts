@@ -1,22 +1,36 @@
-﻿/// <reference path="../typings/bundle.d.ts" />
+import * as PIXI from 'pixi.js';
+import { Scene } from './Scene';
 
-import Boot from "./Boot"
-import Preloader from "./Preloader"
-import MainMenu from "./MainMenu"
-import Test1 from "./Test1"
+/**
+ * Game
+ */
+export class Game {
+    private currentScene: Scene;
+    private app: PIXI.Application;
 
-export default class Game extends Phaser.Game {
+    constructor(app: PIXI.Application, initScene: Scene) {
+        this.app = app;
+        this.currentScene = initScene;
+        initScene.create();
+        this.app.stage.addChild(initScene.container);
+        app.ticker.add((deltaTime) => {
+            this.update();
+            this.render();
+        });
+    }
 
-    constructor() {
+    public next(newScene: Scene) {
+        this.currentScene.destroy();
+        this.app.stage.removeChild(this.currentScene.container);
+        this.currentScene = newScene;
+        newScene.create();
+    }
 
-        super(800, 600, Phaser.AUTO, 'content', null);
+    public update() {
+        this.currentScene.update();
+    }
 
-        this.state.add('Boot', Boot, false);
-        this.state.add('Preloader', Preloader, false);
-        this.state.add('MainMenu', MainMenu, false);
-        this.state.add('Test1', Test1, false);
-
-        this.state.start('Boot')
+    public render() {
+        this.app.renderer.render(this.app.stage);
     }
 }
-

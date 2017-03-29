@@ -1,6 +1,4 @@
-﻿/// <reference path="../typings/jasmine/jasmine.d.ts" />
-
-import { NetOfCube, Piece } from "../ts/Solver";
+﻿import { NetOfCube, Piece } from "../src/ts/Solver";
 
 describe('NetOfCube', () => {
 

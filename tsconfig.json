@@ -1,22 +1,18 @@
 {
-	"compilerOptions": {
-		"target": "es5",
-		"module": "commonjs",
-		"noImplicitAny": false,
-		"noEmitOnError": true,
-		"removeComments": true,
-		"sourceMap": false
-	},
-	"files": [
-		"src/typings/bundle.d.ts",
-		"src/ts/app.ts",
-		"src/ts/AutoGenerator.ts",
-		"src/ts/Boot.ts",
-		"src/ts/Game.ts",
-		"src/ts/MainMenu.ts",
-		"src/ts/Preloader.ts",
-		"src/ts/Solver.ts",
-		"src/ts/Test1.ts",
-		"src/ts/util.ts"
-	]
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "removeComments": true,
+        "module": "commonjs",
+        "target": "es6",
+        "allowJs": true
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
+    ]
 }

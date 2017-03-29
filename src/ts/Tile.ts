@@ -42,6 +42,20 @@ export class Tile {
         this.sprite.y = y;
     }
 
+    public coloring(state: number = this.currentState) {
+        if (state !== this.currentState) {
+            this.currentState = state;
+        }
+        if (state === 0) {
+            this.sprite.tint = 0xffffff;
+            this.sprite.alpha = 0.2;
+        } else {
+            this.sprite.alpha = 1;
+            const color = STATE_COLOR_MAP[state];
+            this.sprite.tint = color;
+        }
+    }
+
     private onMouseOver = (ev: any): void => {
         const target: PIXI.Sprite = ev.target;
         this.prevState = this.currentState;
@@ -65,19 +79,5 @@ export class Tile {
         }
         this.prevState = this.state;
         this.coloring();
-    }
-
-    public coloring(state: number = this.currentState) {
-        if (state !== this.currentState) {
-            this.currentState = state;
-        }
-        if (state === 0) {
-            this.sprite.tint = 0xffffff;
-            this.sprite.alpha = 0.2;
-        } else {
-            this.sprite.alpha = 1;
-            const color = STATE_COLOR_MAP[state];
-            this.sprite.tint = color;
-        }
     }
 }

@@ -130,13 +130,6 @@ export class Solver {
         lx: number,
         ly: number
     ): number[] {
-
-        if (count === 1) {
-            //console.log("at last!!");
-            //sx = 0;
-            //sy = 0;
-        }
-
         if (7 < fillNum) {
             fillNum = 2;
         }
@@ -146,7 +139,6 @@ export class Solver {
         const len = h * w;
 
         if (count !== countMax && this.cutoffCheck(ns, width)) {
-            //console.log("-------cutoff!");
             return ns;
         }
 
@@ -157,7 +149,6 @@ export class Solver {
             for (let x = sx; x < lx; x += 1) {
 
                 if (nx !== -1 && ny !== -1) {
-                    //console.log("nxy init. start from " + nx + "," + ny);
                     x = nx;
                     y = ny;
                     nx = -1;
@@ -170,29 +161,21 @@ export class Solver {
 
                 if (this.solution !== undefined) { return ns; }
 
-                //console.log("count:" + count + ", chk(" + x + ", " + y + ") sxy["+sx+", "+sy+"]");
-
                 const all = this.net.all;
                 for (const piece of all) {
                     if (this.solution === undefined && piece.match(ns, w, x, y)) {
-                        //console.log("count "+count+", at "+x+","+y+": matched "+all[i].internal_number+""+all[i].toString())
                         const a = piece.filled(ns, w, x, y, fillNum);
                         if (count === 1) { // found solution
                             this.solution = this.copy(a);
                             ns = a;
                             return ns;
                         } else {
-                            //console.log("stack------")
                             this.solve1(a, w, count - 1, countMax, fillNum + 1, sx, sy, x, y, lx, ly);
                         }
                     }
                 }
             }
-            //console.log("nextline");
         }
-
-        //callback.apply(context, [count]);
-        //console.log("-------stack")
         return ns;
     }
 

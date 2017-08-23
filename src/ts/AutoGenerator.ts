@@ -69,6 +69,7 @@ export class AutoGenerator {
                 console.log('something wrong :(');
             }
         }
+
         return ns;
     }
 

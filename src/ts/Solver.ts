@@ -27,6 +27,7 @@ export class Solver {
             const mes = `sum of tiles is ${sumTiles}. cant solve because cannot mod 6.`;
             this.message = mes;
             console.log(mes);
+
             return ns;
         }
 
@@ -57,6 +58,7 @@ export class Solver {
         if (this.solution !== undefined) {
             this.foundCubeCount = sumTiles / 6 | 0;
         }
+
         return ret;
     }
 
@@ -64,6 +66,7 @@ export class Solver {
     private skip(ns: number[], width: number, xx: number, yy: number): boolean {
         if (this.skipCache[yy * width + xx]) {
             this.skipCacheHit += 1;
+
             return true;
         }
 
@@ -87,6 +90,7 @@ export class Solver {
                 }
                 if (emptyN > 19) {
                     this.skipCache[yy * width + xx] = true;
+
                     return true;
                 }
                 if (emptyN + filledTileN > 19) {
@@ -114,6 +118,7 @@ export class Solver {
             } else { return 0; }
         };
         const c = recur(j, i);
+
         return c < 6;
     }
 
@@ -168,6 +173,7 @@ export class Solver {
                         if (count === 1) { // found solution
                             this.solution = this.copy(a);
                             ns = a;
+
                             return ns;
                         } else {
                             this.solve1(a, w, count - 1, countMax, fillNum + 1, sx, sy, x, y, lx, ly);
@@ -176,6 +182,7 @@ export class Solver {
                 }
             }
         }
+
         return ns;
     }
 

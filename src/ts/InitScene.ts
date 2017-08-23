@@ -82,6 +82,7 @@ export class InitScene extends Scene {
             } else {
                 this.tips = 'Place tiles with click, or press number key for auto-generate.';
             }
+
             return;
         }
         const beforeTime = new Date().getTime();

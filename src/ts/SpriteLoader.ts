@@ -31,7 +31,7 @@ export class SpriteLoader {
 
     public async load() {
         return new Promise((resolve, reject) => {
-            this.loader.load((loader: PIXI.loaders.Loader, resources: any) => {
+            this.loader.load((loader: PIXI.loaders.Loader, resources: {[key: string]: { texture: PIXI.Texture }}) => {
                 Object.keys(resources).forEach((key) => {
                     this.textureMap.set(key, resources[key].texture);
                 });

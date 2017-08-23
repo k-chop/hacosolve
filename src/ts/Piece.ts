@@ -24,6 +24,7 @@ export class Piece {
         // possible width = 2,3,4,5 (3bit)
         ret <<= 3;
         ret += width;
+
         return ret;
     }
 
@@ -37,6 +38,7 @@ export class Piece {
                 ns[i] = false;
             }
         }
+
         return new Piece(ns, width);
     }
 
@@ -101,6 +103,7 @@ export class Piece {
                 }
             }
         }
+
         return tileCheck;
     }
 
@@ -135,6 +138,7 @@ export class Piece {
                 }
             }
         }
+
         return ret;
     }
 
@@ -146,10 +150,13 @@ export class Piece {
         const w = this.width;
 
         for (let i = w; i <= l; i += w) {
-            for (let j = i - 1, k = i - w; k < i; j -= 1 , k += 1) {
+            let j = i - 1;
+            let k = i - w;
+            for ( ; k < i; j -= 1 , k += 1) {
                 ns[k] = this.internal[j];
             }
         }
+
         return new Piece(ns, w);
     }
 
@@ -161,7 +168,8 @@ export class Piece {
         const w = this.width;
         const h = this.height;
 
-        for (let i = l - w, k = 0; i < l; i += 1) {
+        for (let i = l - w; i < l; i += 1) {
+            let k = 0;
             for (let j = i; j >= 0; j -= w, k += 1) {
                 ns[k] = this.internal[j];
             }
@@ -184,6 +192,7 @@ export class Piece {
                 ret += '\n';
             }
         }
+
         return ret;
     }
 }

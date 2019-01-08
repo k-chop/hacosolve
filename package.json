@@ -6,8 +6,8 @@
     "author": "whelmaze <whelmaze@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "build": "webpack --progress --colors",
-        "dev": "webpack-dev-server --content-base dist/"
+        "build": "webpack --mode=production",
+        "dev": "webpack-dev-server"
     },
     "private": true,
     "dependencies": {
@@ -17,13 +17,14 @@
     "devDependencies": {
         "@types/howler": "^2.0.2",
         "@types/pixi.js": "^4.4.0",
-        "awesome-typescript-loader": "^3.1.2",
-        "html-webpack-plugin": "^2.28.0",
-        "source-map-loader": "^0.2.0",
-        "tslint": "^5.5.0",
-        "tslint-microsoft-contrib": "^5.0.1",
-        "typescript": "^2.2.2",
-        "webpack": "^3.1.0",
-        "webpack-dev-server": "^2.4.2"
+        "html-webpack-plugin": "^3.2.0",
+        "source-map-loader": "^0.2.4",
+        "ts-loader": "^5.3.3",
+        "tslint": "^5.12.0",
+        "tslint-microsoft-contrib": "^6.0.0",
+        "typescript": "^3.2.2",
+        "webpack": "^4.28.1",
+        "webpack-cli": "^3.2.1",
+        "webpack-dev-server": "^3.1.14"
     }
 }

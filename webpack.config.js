@@ -1,32 +1,35 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 module.exports = {
     entry: './src/ts/app.ts',
     output: {
         filename: 'bundle.js',
-        path: __dirname + "/dist"
+        path: path.join(__dirname, 'public'),
     },
-    devtool: "source-map",
+    mode: 'development',
+    devtool: "inline-source-map",
     module: {
         rules: [
             {
                 test: /\.tsx?$/,
-                loader: 'awesome-typescript-loader',
+                loader: 'ts-loader',
                 exclude: /node_modules/,
-            },
-            {
-              enforce: "pre",
-              test: /\.js$/,
-              loader: "source-map-loader"
             }
         ]
     },
     resolve: {
-        extensions: [".tsx", ".ts", ".js"]
+        extensions: [".ts", ".js"]
     },
     plugins: [
         new HtmlWebpackPlugin({
             title: 'HACOSOLVE'
         })
-    ]
+    ],
+    devServer: {
+        contentBase: path.join(__dirname, 'public'),
+        watchContentBase: true,
+        compress: true,
+        port: 9000
+    }
 };

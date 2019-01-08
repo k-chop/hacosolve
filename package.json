@@ -6,8 +6,8 @@
     "author": "whelmaze <whelmaze@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "build": "webpack --progress --colors",
-        "dev": "webpack-dev-server --content-base dist/"
+        "build": "webpack --mode=production",
+        "dev": "webpack-dev-server"
     },
     "private": true,
     "dependencies": {

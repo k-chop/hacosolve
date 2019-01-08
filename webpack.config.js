@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 module.exports = {
     entry: './src/ts/app.ts',
@@ -23,5 +24,10 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'HACOSOLVE'
         })
-    ]
+    ],
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+        compress: true,
+        port: 9000
+    }
 };

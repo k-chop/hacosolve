@@ -5,8 +5,9 @@ module.exports = {
     entry: './src/ts/app.ts',
     output: {
         filename: 'bundle.js',
-        path: __dirname + "/dist"
+        path: path.join(__dirname, 'public'),
     },
+    mode: 'development',
     devtool: "inline-source-map",
     module: {
         rules: [
@@ -26,7 +27,8 @@ module.exports = {
         })
     ],
     devServer: {
-        contentBase: path.join(__dirname, 'dist'),
+        contentBase: path.join(__dirname, 'public'),
+        watchContentBase: true,
         compress: true,
         port: 9000
     }

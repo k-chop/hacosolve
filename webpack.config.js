@@ -6,23 +6,18 @@ module.exports = {
         filename: 'bundle.js',
         path: __dirname + "/dist"
     },
-    devtool: "source-map",
+    devtool: "inline-source-map",
     module: {
         rules: [
             {
                 test: /\.tsx?$/,
-                loader: 'awesome-typescript-loader',
+                loader: 'ts-loader',
                 exclude: /node_modules/,
-            },
-            {
-              enforce: "pre",
-              test: /\.js$/,
-              loader: "source-map-loader"
             }
         ]
     },
     resolve: {
-        extensions: [".tsx", ".ts", ".js"]
+        extensions: [".ts", ".js"]
     },
     plugins: [
         new HtmlWebpackPlugin({

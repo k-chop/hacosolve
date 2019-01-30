@@ -9,7 +9,7 @@
         "build": "webpack --mode=production",
         "dev": "webpack-dev-server",
         "lint": "eslint src/**/*.ts",
-        "eslint-check": "eslint --print-config . | eslint-config-prettier-check"
+        "prettier": "prettier src/**/*.ts --write"
     },
     "private": true,
     "dependencies": {

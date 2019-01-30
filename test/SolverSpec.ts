@@ -1,4 +1,4 @@
-﻿import { NetOfCube, Piece } from "../src/ts/Solver";
+import { NetOfCube, Piece } from "../src/ts/Solver";
 
 describe('NetOfCube', () => {
 

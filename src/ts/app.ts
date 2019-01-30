@@ -12,4 +12,5 @@ window.onload = () => {
   document.body.appendChild(app.view);
 
   const game = new Game(app, new InitScene());
+  game.run();
 };

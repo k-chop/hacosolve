@@ -4,15 +4,11 @@ export function rnd(begin: number, end: number): number {
   return Math.floor(Math.random() * (end - begin)) + begin;
 }
 
-export function makeAccessor<T>(arr: T[], width: number): XYAccessWrapper<T> {
-  return new XYAccessWrapper(arr, width);
-}
-
 export class XYAccessWrapper<T> {
   private self: T[];
   private width: number;
 
-  constructor(self: T[], width: number) {
+  public constructor(self: T[], width: number) {
     this.self = self;
     this.width = width;
   }
@@ -28,4 +24,8 @@ export class XYAccessWrapper<T> {
       this.self[y * this.width + x] = op;
     };
   }
+}
+
+export function makeAccessor<T>(arr: T[], width: number): XYAccessWrapper<T> {
+  return new XYAccessWrapper(arr, width);
 }

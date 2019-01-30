@@ -18,7 +18,7 @@ export class InitScene extends Scene {
 
   private spriteLoader: SpriteLoader;
 
-  constructor() {
+  public constructor() {
     super("init");
     this.spriteLoader = new SpriteLoader();
     this.tiles = new Array<Tile>();
@@ -34,7 +34,7 @@ export class InitScene extends Scene {
     // this.coloring();
   }
 
-  public async create() {
+  public async create(): Promise<void> {
     await this.load();
 
     for (let col = 0; col < this.SIZE_Y; col += 1) {
@@ -51,7 +51,7 @@ export class InitScene extends Scene {
     }
     const solveButton = this.spriteLoader.sprite("btn_solve");
     solveButton.interactive = true;
-    solveButton.on("pointerdown", (ev: {}) => {
+    solveButton.on("pointerdown", () => {
       this.solveStart();
     });
     this.container.addChild(solveButton);
@@ -63,7 +63,7 @@ export class InitScene extends Scene {
     throw new Error("Method not implemented.");
   }
 
-  private async load() {
+  private async load(): Promise<void> {
     this.spriteLoader.addAll([
       ["btn_erase", "./assets/image/button_erase.png"],
       ["btn_solve", "./assets/image/button_solve.png"],
@@ -72,7 +72,7 @@ export class InitScene extends Scene {
     await this.spriteLoader.load();
   }
 
-  private solveStart() {
+  private solveStart(): void {
     const isFresh = this.tiles.every(
       tile => tile.state === 0 || tile.state === 1
     );
@@ -119,12 +119,12 @@ export class InitScene extends Scene {
     this.coloring();
   }
 
-  private initializeBoard() {
+  private initializeBoard(): void {
     this.gen = new AutoGenerator(this.SIZE_X, this.SIZE_Y);
     this.generate(5);
   }
 
-  private generate(cubeNum: number) {
+  private generate(cubeNum: number): void {
     const ns = this.gen.generate(cubeNum);
     for (let idx = 0; idx < ns.length; idx += 1) {
       this.tiles[idx].state = ns[idx];
@@ -132,7 +132,7 @@ export class InitScene extends Scene {
     this.coloring();
   }
 
-  private coloring() {
+  private coloring(): void {
     for (const tile of this.tiles) {
       tile.coloring();
     }

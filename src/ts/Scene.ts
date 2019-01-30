@@ -1,3 +1,5 @@
+import * as PIXI from "pixi.js";
+
 /**
  * Scene
  */
@@ -6,7 +8,7 @@ export abstract class Scene {
   public readonly app: PIXI.Application;
   public readonly container: PIXI.Container;
 
-  constructor(id: string) {
+  public constructor(id: string) {
     this.id = id;
     this.container = new PIXI.Container();
   }

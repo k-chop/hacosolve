@@ -4,7 +4,7 @@ export class NetOfCube {
   public pieces: Piece[];
   public all: Piece[];
 
-  constructor() {
+  public constructor() {
     this.pieces = new Array<Piece>(11);
 
     this.pieces[0] = Piece.FROM_STRING("#   " + "####" + "#   ", 4);

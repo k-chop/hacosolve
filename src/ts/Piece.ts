@@ -4,7 +4,7 @@ export class Piece {
   public width: number;
   public height: number;
 
-  constructor(ns: boolean[], width: number) {
+  public constructor(ns: boolean[], width: number) {
     this.internal = ns;
     this.internalNumber = Piece.CALC_INTERNAL_NUMBER(ns, width);
     this.width = width;
@@ -172,7 +172,6 @@ export class Piece {
     const l = this.internal.length;
     const ns = new Array<boolean>(l);
     const w = this.width;
-    const h = this.height;
 
     for (let i = l - w; i < l; i += 1) {
       let k = 0;
@@ -185,7 +184,7 @@ export class Piece {
   }
 
   // デバッグ出力用
-  public toString() {
+  public toString(): string {
     let ret = "\n";
     for (let i = 0; i < this.internal.length; i += 1) {
       if (this.internal[i]) {

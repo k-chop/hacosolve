@@ -9,7 +9,7 @@ export class Solver {
   public message: string;
   public foundCubeCount: number;
 
-  constructor() {
+  public constructor() {
     this.net = new NetOfCube();
     this.skipCache = [];
     this.message = "";
@@ -19,7 +19,7 @@ export class Solver {
   public solve(ns: number[], width: number): number[] {
     this.solution = undefined;
     // ns contains 0 or 1 only
-    const sumTiles = ns.reduce((p, c, i, a) => p + c);
+    const sumTiles = ns.reduce((p, c) => p + c);
     // cant solve
     if (sumTiles % 6 !== 0) {
       const mes = `sum of tiles is ${sumTiles}. cant solve because cannot mod 6.`;
@@ -161,16 +161,12 @@ export class Solver {
       fillNum = 2;
     }
 
-    const h = (ns.length / width) | 0;
+    // const h = (ns.length / width) | 0;
     const w = width;
-    const len = h * w;
 
     if (count !== countMax && this.cutoffCheck(ns, width)) {
       return ns;
     }
-
-    const nextX = nx;
-    const nextY = ny;
 
     for (let y = sy; y < ly; y += 1) {
       for (let x = sx; x < lx; x += 1) {

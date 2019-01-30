@@ -1,10 +1,5 @@
 import * as PIXI from "pixi.js";
 
-interface ISpriteProperty {
-  ident: string;
-  url: string;
-}
-
 type TextureMap = Map<string, PIXI.Texture>;
 
 /**
@@ -15,22 +10,22 @@ export class SpriteLoader {
   private loaded = false;
   private textureMap: TextureMap;
 
-  constructor() {
+  public constructor() {
     this.textureMap = new Map<string, PIXI.Texture>();
   }
 
-  public add(ident: string, url: string) {
+  public add(ident: string, url: string): void {
     this.loader.add(ident, url);
   }
 
-  public addAll(props: [string, string][]) {
+  public addAll(props: [string, string][]): void {
     props.forEach(([ident, url]) => {
       this.add(ident, url);
     });
   }
 
-  public async load() {
-    return new Promise((resolve, reject) => {
+  public async load(): Promise<void> {
+    return new Promise(resolve => {
       this.loader.load(
         (
           loader: PIXI.loaders.Loader,

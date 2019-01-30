@@ -17,14 +17,14 @@ export class Tile {
   public sprite: PIXI.Sprite;
   private currentState: number;
   private prevState: number;
-  get state(): number {
+  public get state(): number {
     return this.currentState;
   }
-  set state(newState: number) {
+  public set state(newState: number) {
     this.currentState = newState;
   }
 
-  constructor(id: number, sprite: PIXI.Sprite, x: number, y: number) {
+  public constructor(id: number, sprite: PIXI.Sprite, x: number, y: number) {
     this.id = id;
     this.sprite = sprite;
     this.sprite.hitArea = TILE_HITBOX;
@@ -36,7 +36,7 @@ export class Tile {
     this.sprite.y = y;
   }
 
-  public coloring(state: number = this.currentState) {
+  public coloring(state: number = this.currentState): void {
     if (state !== this.currentState) {
       this.currentState = state;
     }
@@ -50,21 +50,18 @@ export class Tile {
     }
   }
 
-  private onMouseOver = (ev: { target: PIXI.Sprite }): void => {
-    const target = ev.target;
+  private onMouseOver = (_ev: { target: PIXI.Sprite }): void => {
     this.prevState = this.currentState;
     this.currentState = 7;
     this.coloring();
   };
 
-  private onMouseOut = (ev: { currentTarget: PIXI.Sprite }): void => {
-    const target: PIXI.Sprite = ev.currentTarget;
+  private onMouseOut = (_ev: { currentTarget: PIXI.Sprite }): void => {
     this.currentState = this.prevState;
     this.coloring();
   };
 
-  private onPointerDown = (ev: { target: PIXI.Sprite }): void => {
-    const target = ev.target;
+  private onPointerDown = (_ev: { target: PIXI.Sprite }): void => {
     console.log(`Pressed id ${this.id} tile.`);
     if (this.prevState !== 0) {
       this.state = 0;

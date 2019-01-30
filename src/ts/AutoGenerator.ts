@@ -10,7 +10,7 @@ export class AutoGenerator {
 
   public accessor: util.XYAccessWrapper<number>;
 
-  constructor(width: number, height: number) {
+  public constructor(width: number, height: number) {
     this.net = new NetOfCube();
     this.width = Math.min(width, this.SIZE_LIMIT);
     this.height = Math.min(height, this.SIZE_LIMIT);
@@ -32,9 +32,6 @@ export class AutoGenerator {
 
       const y = (this.height / 2) | 0;
       const x = (this.width / 2) | 0;
-
-      const r = 0;
-      const failed = 0;
 
       if (i === 0) {
         if (p.matchN(ns, this.width, x, y) !== -1) {

@@ -1,4 +1,4 @@
-﻿// [begin, end)
+// [begin, end)
 export function rnd(begin: number, end: number): number {
   // tslint:disable-next-line:insecure-random
   return Math.floor(Math.random() * (end - begin)) + begin;

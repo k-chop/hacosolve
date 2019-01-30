@@ -1,4 +1,4 @@
-﻿import { NetOfCube } from "./NetOfCube";
+import { NetOfCube } from "./NetOfCube";
 import * as util from "./util";
 
 export class AutoGenerator {

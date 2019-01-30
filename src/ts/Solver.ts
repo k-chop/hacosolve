@@ -122,7 +122,7 @@ export class Solver {
 
     const mark = new Array<boolean>(ns.length);
     const recur = (x: number, y: number): number => {
-      if (0 <= x && x < width && 0 <= y && y < height && !mark[y * width + x]) {
+      if (x >= 0 && x < width && y >= 0 && y < height && !mark[y * width + x]) {
         mark[y * width + x] = true;
         if (ns[y * width + x] === 1) {
           return (
@@ -157,7 +157,7 @@ export class Solver {
     lx: number,
     ly: number
   ): number[] {
-    if (7 < fillNum) {
+    if (fillNum > 7) {
       fillNum = 2;
     }
 

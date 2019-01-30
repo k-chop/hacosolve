@@ -15,7 +15,7 @@ export class Piece {
     let ret = 0;
     let e = 1;
     let idx = arr.length - 1;
-    while (0 <= idx) {
+    while (idx >= 0) {
       if (arr[idx]) {
         ret += e;
       }
@@ -48,7 +48,7 @@ export class Piece {
   }
 
   public at(x: number, y: number): boolean {
-    if (0 <= x && x < this.width && 0 <= y && y < this.height) {
+    if (x >= 0 && x < this.width && y >= 0 && y < this.height) {
       return this.internal[y * this.width + x];
     } else {
       return undefined;
@@ -110,7 +110,7 @@ export class Piece {
     return tileCheck;
   }
 
-  //matchF(ns: number[], nsWidth: number, x: number, y: number, f: (n: number) => boolean): boolean {
+  // matchF(ns: number[], nsWidth: number, x: number, y: number, f: (n: number) => boolean): boolean {
   public match(ns: number[], nsWidth: number, x: number, y: number): boolean {
     const h = (ns.length / nsWidth) | 0;
 

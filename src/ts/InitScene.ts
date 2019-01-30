@@ -28,10 +28,10 @@ export class InitScene extends Scene {
   public update(): void {
     // RAINBOOOOOW!!!!
     //
-    //for (const tile of this.tiles) {
+    // for (const tile of this.tiles) {
     //    tile.state = Math.floor(Math.random() * 7);
-    //}
-    //this.coloring();
+    // }
+    // this.coloring();
   }
 
   public async create() {
@@ -56,7 +56,7 @@ export class InitScene extends Scene {
     });
     this.container.addChild(solveButton);
     this.initializeBoard();
-    //this.solveStart();
+    // this.solveStart();
   }
 
   public destroy(): void {

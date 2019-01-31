@@ -5,10 +5,10 @@ export class Piece {
   public height: number;
 
   public constructor(ns: boolean[], width: number) {
-    this.internal = ns;
+    this.internal = [...ns];
     this.internalNumber = Piece.calcInternalNumber(ns, width);
     this.width = width;
-    this.height = ns.length / width;
+    this.height = Math.floor(ns.length / width);
   }
 
   public static calcInternalNumber(arr: boolean[], width: number): number {
@@ -79,12 +79,6 @@ export class Piece {
     return ret;
   }
 
-  /*
-    matchF(ns: number[], nsWidth: number, x: number, y: number): boolean {
-        return this.matchF(ns, nsWidth, x, y, (n: number) => { return n != 1; });
-    }
-    */
-
   public matchN(ns: number[], nsWidth: number, x: number, y: number): number {
     const h = (ns.length / nsWidth) | 0;
     let tileCheck = 0;
@@ -110,7 +104,6 @@ export class Piece {
     return tileCheck;
   }
 
-  // matchF(ns: number[], nsWidth: number, x: number, y: number, f: (n: number) => boolean): boolean {
   public match(ns: number[], nsWidth: number, x: number, y: number): boolean {
     const h = (ns.length / nsWidth) | 0;
 
@@ -172,11 +165,15 @@ export class Piece {
     const l = this.internal.length;
     const ns = new Array<boolean>(l);
     const w = this.width;
+    const h = this.height;
 
-    for (let i = l - w; i < l; i += 1) {
-      let k = 0;
-      for (let j = i; j >= 0; j -= w, k += 1) {
-        ns[k] = this.internal[j];
+    for (let toIdx = 0, row = 0; toIdx < l; row += 1) {
+      for (
+        let fromIdx = (h - 1) * w + row;
+        fromIdx >= 0;
+        fromIdx -= w, toIdx += 1
+      ) {
+        ns[toIdx] = this.internal[fromIdx];
       }
     }
 

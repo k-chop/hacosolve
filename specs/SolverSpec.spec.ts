@@ -4,7 +4,7 @@ import { Piece } from "../src/ts/Piece";
 describe("NetOfCube", () => {
   it("can count unique candidate", () => {
     const net = new NetOfCube();
-    expect(net.all.length).toBe(62);
+    expect(net.all.length).toBe(64);
   });
 });
 

@@ -6,12 +6,12 @@ export class Piece {
 
   public constructor(ns: boolean[], width: number) {
     this.internal = ns;
-    this.internalNumber = Piece.CALC_INTERNAL_NUMBER(ns, width);
+    this.internalNumber = Piece.calcInternalNumber(ns, width);
     this.width = width;
     this.height = ns.length / width;
   }
 
-  public static CALC_INTERNAL_NUMBER(arr: boolean[], width: number): number {
+  public static calcInternalNumber(arr: boolean[], width: number): number {
     let ret = 0;
     let e = 1;
     let idx = arr.length - 1;
@@ -29,7 +29,7 @@ export class Piece {
     return ret;
   }
 
-  public static FROM_STRING(pattern: string, width: number): Piece {
+  public static fromString(pattern: string, width: number): Piece {
     // string -> boolean[]
     const ns = new Array<boolean>(pattern.length);
     for (let i = 0; i < pattern.length; i += 1) {

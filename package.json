@@ -9,7 +9,8 @@
         "build": "webpack --mode=production",
         "dev": "webpack-dev-server",
         "lint": "eslint src/**/*.ts specs/**/*.ts",
-        "prettier": "prettier \"**/*.ts\" --write"
+        "prettier": "prettier \"**/*.ts\" --write",
+        "test": "jest"
     },
     "private": true,
     "dependencies": {

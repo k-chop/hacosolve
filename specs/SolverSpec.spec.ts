@@ -3,29 +3,29 @@ import { Piece } from "../src/ts/Piece";
 
 describe("NetOfCube", () => {
   it("can count unique candidate", () => {
-    let net = new NetOfCube();
+    const net = new NetOfCube();
     expect(net.all.length).toBe(62);
   });
 });
 
 describe("Pieces", () => {
-  let t = Piece.fromString("#   " + "####" + "#   ", 4);
+  const t = Piece.fromString("#   " + "####" + "#   ", 4);
 
   it("can create from Piece.fromString", () => {
     expect(t.height).toBe(3);
   });
 
   it("can create properly mirrored piece", () => {
-    let mirroredT = t.mirrored();
+    const mirroredT = t.mirrored();
     expect(mirroredT.width).toBe(4);
     expect(mirroredT.height).toBe(3);
     expect(mirroredT.eq(t)).toBeFalsy();
   });
 
   it("should equal to rotate 360", () => {
-    let net = new NetOfCube();
+    const net = new NetOfCube();
     net.all.forEach(p => {
-      let rotated360 = p
+      const rotated360 = p
         .rotated90()
         .rotated90()
         .rotated90()
@@ -35,9 +35,9 @@ describe("Pieces", () => {
   });
 
   it("should equal to piece that rotated and mirrored many times", () => {
-    let net = new NetOfCube();
+    const net = new NetOfCube();
     net.all.forEach(p => {
-      let transformedMany = p
+      const transformedMany = p
         .rotated90()
         .mirrored()
         .mirrored()

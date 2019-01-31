@@ -24,18 +24,18 @@ export class NetOfCube {
 
   // 同じ形状のピースを除いた全ての候補のリストを返す
   public allCandidates(): Piece[] {
-    let all: Piece[] = [];
+    const all: Piece[] = [];
     for (const piece of this.pieces) {
-      all = all.concat(piece.variations());
+      all.push(...piece.variations());
     }
 
     const dist: Piece[] = [];
-    const comp: number[] = [];
-    for (const p of all) {
-      const hash = p.internalNumber;
-      if (comp.indexOf(hash) === -1) {
-        dist.push(p);
-        comp.push(hash);
+    const checked: Set<number> = new Set<number>();
+    for (const piece of all) {
+      const hash = piece.internalNumber;
+      if (!checked.has(hash)) {
+        dist.push(piece);
+        checked.add(hash);
       }
     }
 

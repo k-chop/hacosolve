@@ -24,7 +24,7 @@ describe("Pieces", () => {
 
   it("should equal to rotate 360", () => {
     let net = new NetOfCube();
-    net.all.forEach((p, idx, arr) => {
+    net.all.forEach(p => {
       let rotated360 = p
         .rotated90()
         .rotated90()
@@ -36,7 +36,7 @@ describe("Pieces", () => {
 
   it("should equal to piece that rotated and mirrored many times", () => {
     let net = new NetOfCube();
-    net.all.forEach((p, idx, arr) => {
+    net.all.forEach(p => {
       let transformedMany = p
         .rotated90()
         .mirrored()

@@ -9,7 +9,9 @@ window.onload = () => {
   const app = new PIXI.Application(600, 600, {
     backgroundColor: 0x061639
   });
-  document.body.appendChild(app.view);
+  const wrapper = document.createElement("div");
+  document.body.appendChild(wrapper);
+  wrapper.appendChild(app.view);
 
   const game = new Game(app, new InitScene());
   game.run();

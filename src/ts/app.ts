@@ -10,6 +10,7 @@ window.onload = () => {
     backgroundColor: 0x061639
   });
   const wrapper = document.createElement("div");
+  wrapper.style.textAlign = "center";
   document.body.appendChild(wrapper);
   wrapper.appendChild(app.view);
 

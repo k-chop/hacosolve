@@ -20,6 +20,7 @@
     "@typescript-eslint/no-unused-vars": ["error", {
       "argsIgnorePattern": "^_"
     }],
+    "@typescript-eslint/interface-name-prefix": "false",
     "prefer-const": "error"
   },
   "env": {

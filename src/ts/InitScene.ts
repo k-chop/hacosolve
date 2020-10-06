@@ -14,7 +14,7 @@ export class InitScene extends Scene {
   public accessor: util.XYAccessWrapper<number>
   public gen: AutoGenerator
   public tiles: Tile[]
-  public tips: string
+  public tips: PIXI.Text
 
   private spriteLoader: SpriteLoader
 
@@ -22,17 +22,9 @@ export class InitScene extends Scene {
     super('init')
     this.spriteLoader = new SpriteLoader()
     this.tiles = new Array<Tile>()
-    this.tips = ''
   }
 
-  public update(): void {
-    // RAINBOOOOOW!!!!
-    //
-    // for (const tile of this.tiles) {
-    //    tile.state = Math.floor(Math.random() * 7);
-    // }
-    // this.coloring();
-  }
+  public update(): void {}
 
   public async create(): Promise<void> {
     await this.load()
@@ -55,8 +47,14 @@ export class InitScene extends Scene {
       this.solveStart()
     })
     this.container.addChild(solveButton)
+
+    this.tips = new PIXI.Text('', { fill: ['#fff'], fontSize: 16 })
+    this.tips.x = 5
+    this.tips.y = 600 - 20
+
+    this.container.addChild(this.tips)
+
     this.initializeBoard()
-    // this.solveStart();
   }
 
   public destroy(): void {
@@ -81,9 +79,9 @@ export class InitScene extends Scene {
         tile => tile.state === 2 || tile.state === 5
       )
       if (dunno) {
-        this.tips = 'You need reset!'
+        this.tips.text = 'You need reset!'
       } else {
-        this.tips =
+        this.tips.text =
           'Place tiles with click, or press number key for auto-generate.'
       }
 
@@ -95,10 +93,10 @@ export class InitScene extends Scene {
     solver.solve(numbers, this.SIZE_X)
     if (solver.solution == null) {
       if (solver.message !== '') {
-        this.tips = solver.message
+        this.tips.text = solver.message
         console.log(solver.message)
       } else {
-        this.tips = 'cannot solve...'
+        this.tips.text = 'cannot solve...'
         console.log(this.tips)
       }
       for (const tile of this.tiles) {
@@ -112,7 +110,7 @@ export class InitScene extends Scene {
         this.tiles[idx].state = solver.solution[idx]
       }
       const elaspedTime = (new Date().getTime() - beforeTime) / 1000
-      this.tips = `Found ${solver.foundCubeCount} cubes. elasped time: ${elaspedTime} sec`
+      this.tips.text = `Found ${solver.foundCubeCount} cubes. elasped time: ${elaspedTime} sec`
     }
     this.coloring()
   }

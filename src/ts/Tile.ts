@@ -36,6 +36,14 @@ export class Tile {
     this.sprite.y = y
   }
 
+  public canSolve(): boolean {
+    return this.state === 0 || this.state === 1
+  }
+
+  public isBlank(): boolean {
+    return this.state === 0
+  }
+
   public coloring(state: number = this.currentState): void {
     if (state !== this.currentState) {
       this.currentState = state

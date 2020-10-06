@@ -71,22 +71,20 @@ export class InitScene extends Scene {
   }
 
   private solveStart(): void {
-    const isFresh = this.tiles.every(
-      tile => tile.state === 0 || tile.state === 1
-    )
-    if (!isFresh) {
-      const dunno = this.tiles.some(
-        tile => tile.state === 2 || tile.state === 5
-      )
-      if (dunno) {
-        this.tips.text = 'You need reset!'
-      } else {
+    const isFresh = this.tiles.every(tile => tile.canSolve())
+    const isBlankAll = this.tiles.every(tile => tile.isBlank())
+
+    if (isFresh) {
+      if (isBlankAll) {
         this.tips.text =
           'Place tiles with click, or press number key for auto-generate.'
+        return
       }
-
+    } else {
+      this.tips.text = 'You need reset!'
       return
     }
+
     const beforeTime = new Date().getTime()
     const solver = new Solver()
     const numbers = this.tiles.map(tile => tile.state)

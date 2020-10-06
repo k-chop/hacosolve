@@ -5,8 +5,7 @@
   },
   "plugins": [
     "jest",
-    "@typescript-eslint",
-    "prettier"
+    "@typescript-eslint"
   ],
   "extends": [
     "standard",

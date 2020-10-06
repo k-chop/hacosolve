@@ -85,7 +85,7 @@ export class InitScene extends Scene {
       return
     }
 
-    const beforeTime = new Date().getTime()
+    const beforeTime = performance.now()
     const solver = new Solver()
     const numbers = this.tiles.map(tile => tile.state)
     solver.solve(numbers, this.SIZE_X)
@@ -103,11 +103,10 @@ export class InitScene extends Scene {
         }
       }
     } else {
-      console.log('solved!')
       for (let idx = 0; idx < this.tiles.length; idx += 1) {
         this.tiles[idx].state = solver.solution[idx]
       }
-      const elaspedTime = (new Date().getTime() - beforeTime) / 1000
+      const elaspedTime = (performance.now() - beforeTime) / 1000
       this.tips.text = `Found ${solver.foundCubeCount} cubes. elasped time: ${elaspedTime} sec`
     }
     this.coloring()

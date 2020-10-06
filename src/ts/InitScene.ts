@@ -81,7 +81,8 @@ export class InitScene extends Scene {
         return
       }
     } else {
-      this.tips.text = 'You need reset!'
+      this.tips.text =
+        'You need reset. browser reload is only way to reset tiles so sorry my bad'
       return
     }
 

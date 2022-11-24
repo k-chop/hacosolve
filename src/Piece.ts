@@ -47,7 +47,7 @@ export class Piece {
     return this.internalNumber === that.internalNumber
   }
 
-  public at(x: number, y: number): boolean {
+  public at(x: number, y: number): boolean | undefined {
     if (x >= 0 && x < this.width && y >= 0 && y < this.height) {
       return this.internal[y * this.width + x]
     } else {
@@ -131,7 +131,7 @@ export class Piece {
     y: number,
     fillNumber: number
   ): number[] {
-    const ret = [].concat(ns)
+    const ret = [...ns]
     for (let i = 0; i < this.height; i += 1) {
       for (let j = 0; j < this.width; j += 1) {
         if (this.internal[i * this.width + j]) {

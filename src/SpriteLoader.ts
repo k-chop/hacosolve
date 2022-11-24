@@ -53,7 +53,7 @@ export class SpriteLoader {
     if (!this.loaded) {
       return null
     } else {
-      return ids.map(id => this.sprite(id))
+      return ids.map(id => this.sprite(id)!)
     }
   }
 }

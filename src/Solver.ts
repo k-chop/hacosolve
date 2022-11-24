@@ -3,9 +3,9 @@ import { NetOfCube } from './NetOfCube'
 export class Solver {
   public net: NetOfCube
   // 答えが入る、見つかっていない場合はundefined
-  public solution: number[]
+  public solution: number[] | undefined
   public skipCache: boolean[]
-  public skipCacheHit: number
+  public skipCacheHit = 0
   public message: string
   public foundCubeCount: number
 
@@ -108,6 +108,8 @@ export class Solver {
         }
       }
     }
+
+    return false
   }
 
   // 一番左上にあるタイルに隣接したタイルが6つより少ないかどうか
@@ -219,6 +221,6 @@ export class Solver {
   }
 
   private copy(ns: number[]): number[] {
-    return [].concat(ns)
+    return [...ns]
   }
 }

@@ -25,7 +25,7 @@ export class AutoGenerator {
     // NetOfCube.allCandidateからランダムに選択して左上から置いていく
     // 置けないなら右か下にずらしていく
 
-    let ns = [].concat(this.field)
+    let ns = [...this.field]
 
     for (let i = 0; i < n; i += 1) {
       const p = this.net.all[util.rnd(0, this.net.all.length)]

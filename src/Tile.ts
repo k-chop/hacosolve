@@ -15,8 +15,8 @@ const STATE_COLOR_MAP: { [state: number]: number } = {
 export class Tile {
   public id: number
   public sprite: PIXI.Sprite
-  private currentState: number
-  private prevState: number
+  private currentState = 0
+  private prevState = 0
   public get state(): number {
     return this.currentState
   }

@@ -6,11 +6,8 @@
     "author": "whelmaze <whelmaze@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "build": "webpack --mode=production",
-        "dev": "webpack-dev-server",
-        "lint": "eslint src/**/*.ts specs/**/*.ts",
-        "prettier": "prettier \"**/*.ts\" --write",
-        "test": "jest"
+        "build": "tsc && vite build",
+        "dev": "vite"
     },
     "private": true,
     "dependencies": {
@@ -21,31 +18,13 @@
         "@types/howler": "^2.0.5",
         "@types/jest": "^23.3.13",
         "@types/pixi.js": "^4.8.6",
-        "@typescript-eslint/eslint-plugin": "^1.1.1",
-        "@typescript-eslint/parser": "^1.1.1",
-        "eslint": "^5.12.1",
-        "eslint-config-prettier": "^4.0.0",
-        "eslint-config-standard": "^12.0.0",
-        "eslint-plugin-import": "^2.16.0",
-        "eslint-plugin-jest": "^22.2.1",
-        "eslint-plugin-node": "^8.0.1",
-        "eslint-plugin-promise": "^4.0.1",
-        "eslint-plugin-standard": "^4.0.0",
-        "html-webpack-plugin": "^3.2.0",
-        "jest": "^26.5.0",
-        "prettier": "^1.16.2",
-        "source-map-loader": "^0.2.4",
-        "ts-jest": "^26.4.1",
-        "ts-loader": "^5.3.3",
+        "@typescript-eslint/eslint-plugin": "^5.44.0",
+        "@typescript-eslint/parser": "^5.44.0",
+        "eslint": "^8.28.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-import": "^2.26.0",
+        "prettier": "^2.8.0",
         "typescript": "^3.2.2",
-        "webpack": "^4.44.2",
-        "webpack-cli": "^3.2.1",
-        "webpack-dev-server": "^3.11.0"
-    },
-    "resolutions": {
-        "minimist": "1.2.5"
-    },
-    "jest": {
-        "preset": "ts-jest"
+        "vite": "^3.2.4"
     }
 }

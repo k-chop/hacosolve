@@ -3,7 +3,6 @@ import { Scene } from './Scene'
 import { Solver } from './Solver'
 import { SpriteLoader } from './SpriteLoader'
 import { Tile } from './Tile'
-import * as util from './util'
 
 /**
  * InitScene
@@ -11,7 +10,6 @@ import * as util from './util'
 export class InitScene extends Scene {
   public SIZE_X = 20
   public SIZE_Y = 20
-  public accessor: util.XYAccessWrapper<number>
   public gen: AutoGenerator
   public tiles: Tile[]
   public tips: PIXI.Text
@@ -22,9 +20,13 @@ export class InitScene extends Scene {
     super('init')
     this.spriteLoader = new SpriteLoader()
     this.tiles = new Array<Tile>()
+    this.tips = new PIXI.Text('', { fill: ['#fff'], fontSize: 16 })
+    this.gen = new AutoGenerator(this.SIZE_X, this.SIZE_Y)
   }
 
-  public update(): void {}
+  public update(): void {
+    // nop
+  }
 
   public async create(): Promise<void> {
     await this.load()
@@ -36,17 +38,17 @@ export class InitScene extends Scene {
         const y = 0 + col * 6 + row * 6 + 200
 
         const tileSprite = this.spriteLoader.sprite('tileA')
-        const tile = new Tile(idx, tileSprite, x, y)
+        const tile = new Tile(idx, tileSprite!, x, y)
         this.container.addChild(tile.sprite)
         this.tiles[idx] = tile
       }
     }
     const solveButton = this.spriteLoader.sprite('btn_solve')
-    solveButton.interactive = true
-    solveButton.on('pointerdown', () => {
+    solveButton!.interactive = true
+    solveButton!.on('pointerdown', () => {
       this.solveStart()
     })
-    this.container.addChild(solveButton)
+    this.container.addChild(solveButton!)
 
     this.tips = new PIXI.Text('', { fill: ['#fff'], fontSize: 16 })
     this.tips.x = 5
@@ -71,8 +73,8 @@ export class InitScene extends Scene {
   }
 
   private solveStart(): void {
-    const isFresh = this.tiles.every(tile => tile.canSolve())
-    const isBlankAll = this.tiles.every(tile => tile.isBlank())
+    const isFresh = this.tiles.every((tile) => tile.canSolve())
+    const isBlankAll = this.tiles.every((tile) => tile.isBlank())
 
     if (isFresh) {
       if (isBlankAll) {
@@ -88,7 +90,7 @@ export class InitScene extends Scene {
 
     const beforeTime = performance.now()
     const solver = new Solver()
-    const numbers = this.tiles.map(tile => tile.state)
+    const numbers = this.tiles.map((tile) => tile.state)
     solver.solve(numbers, this.SIZE_X)
     if (solver.solution == null) {
       if (solver.message !== '') {
@@ -114,7 +116,6 @@ export class InitScene extends Scene {
   }
 
   private initializeBoard(): void {
-    this.gen = new AutoGenerator(this.SIZE_X, this.SIZE_Y)
     this.generate(5)
   }
 

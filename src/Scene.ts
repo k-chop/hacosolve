@@ -5,7 +5,7 @@ import * as PIXI from 'pixi.js'
  */
 export abstract class Scene {
   public readonly id: string
-  public readonly app: PIXI.Application
+  public readonly app!: PIXI.Application
   public readonly container: PIXI.Container
 
   public constructor(id: string) {

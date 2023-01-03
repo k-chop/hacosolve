@@ -17,6 +17,7 @@ export class Tile {
   public sprite: PIXI.Sprite
   private currentState = 0
   private prevState = 0
+  private onChangeTile?: () => void
 
   public get state(): number {
     return this.currentState
@@ -26,7 +27,13 @@ export class Tile {
     this.currentState = newState
   }
 
-  public constructor(id: number, sprite: PIXI.Sprite, x: number, y: number) {
+  public constructor(
+    id: number,
+    sprite: PIXI.Sprite,
+    x: number,
+    y: number,
+    onChangeTile?: () => void
+  ) {
     this.id = id
     this.sprite = sprite
     this.sprite.hitArea = TILE_HITBOX
@@ -36,6 +43,7 @@ export class Tile {
     this.sprite.on("pointerdown", this.onPointerDown)
     this.sprite.x = x
     this.sprite.y = y
+    this.onChangeTile = onChangeTile
   }
 
   public erase(): void {
@@ -54,6 +62,10 @@ export class Tile {
 
   public isBlank(): boolean {
     return this.state === 0
+  }
+
+  public isError(): boolean {
+    return this.state === 5
   }
 
   public applyColor(state: number = this.currentState): void {
@@ -91,5 +103,7 @@ export class Tile {
     }
     this.prevState = this.state
     this.applyColor()
+
+    this.onChangeTile?.()
   }
 }

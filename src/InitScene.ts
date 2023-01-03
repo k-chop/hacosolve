@@ -41,7 +41,7 @@ export class InitScene extends Scene {
 
         const tileSprite = this.spriteLoader.getSprite("tile")
 
-        const tile = new Tile(idx, tileSprite, x, y)
+        const tile = new Tile(idx, tileSprite, x, y, () => this.onChangeTile())
         this.container.addChild(tile.sprite)
         this.tiles[idx] = tile
       }
@@ -114,8 +114,7 @@ export class InitScene extends Scene {
         return
       }
     } else {
-      this.tips.text =
-        "You need reset. browser reload is only way to reset tiles so sorry my bad"
+      this.tips.text = "Reset tiles."
       return
     }
 
@@ -164,6 +163,15 @@ export class InitScene extends Scene {
   private applyColor(): void {
     for (const tile of this.tiles) {
       tile.applyColor()
+    }
+  }
+
+  public onChangeTile(): void {
+    const isError = this.tiles.every(
+      (tile) => tile.isError() || tile.canSolve()
+    )
+    if (isError) {
+      this.reset()
     }
   }
 }

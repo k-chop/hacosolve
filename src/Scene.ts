@@ -5,7 +5,6 @@ import * as PIXI from "pixi.js"
  */
 export abstract class Scene {
   public readonly id: string
-  public readonly app!: PIXI.Application
   public readonly container: PIXI.Container
 
   public constructor(id: string) {
@@ -14,6 +13,6 @@ export abstract class Scene {
   }
 
   public abstract update(): void
-  public abstract create(): void
+  public abstract create(app: PIXI.Application): void
   public abstract destroy(): void
 }

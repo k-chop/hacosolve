@@ -17,7 +17,7 @@ export class Game {
   }
 
   public run(): void {
-    this.currentScene.create()
+    this.currentScene.create(this.app)
     this.app.stage.addChild(this.currentScene.container)
     this.app.ticker.add((_deltatime) => {
       this.update()
@@ -29,7 +29,7 @@ export class Game {
     this.currentScene.destroy()
     this.app.stage.removeChild(this.currentScene.container)
     this.currentScene = newScene
-    newScene.create()
+    newScene.create(this.app)
   }
 
   public update(): void {

@@ -24,6 +24,9 @@ export class MainScene extends Scene {
   private spriteLoader: SpriteLoader
   private tileCount = 0
 
+  private appWidth = 0
+  private appHeight = 0
+
   public constructor() {
     super("main")
 
@@ -38,14 +41,17 @@ export class MainScene extends Scene {
     // nop
   }
 
-  public async create(): Promise<void> {
+  public async create(app: PIXI.Application): Promise<void> {
+    this.appWidth = app.screen.width
+    this.appHeight = app.screen.height
+
     await this.load()
 
     for (let col = 0; col < this.SIZE_Y; col += 1) {
       for (let row = 0; row < this.SIZE_X; row += 1) {
         const idx = col * this.SIZE_X + row
-        const x = 0 + row * 12 - col * 12 + 280
-        const y = 0 + col * 6 + row * 6 + 200
+        const x = 0 + row * 12 - col * 12 + this.appWidth / 2
+        const y = 0 + col * 6 + row * 6 + this.appHeight / 3
 
         const tileSprite = this.spriteLoader.getSprite("tile")
 
@@ -59,8 +65,8 @@ export class MainScene extends Scene {
     solveButton.interactive = true
     solveButton.anchor.x = 0.5
     solveButton.anchor.y = 1
-    solveButton.x = WIDTH / 2
-    solveButton.y = HEIGHT - 10
+    solveButton.x = this.appWidth / 2
+    solveButton.y = this.appHeight - 30
     solveButton.on("pointerdown", () => this.solveStart())
     this.container.addChild(solveButton)
 
@@ -68,8 +74,8 @@ export class MainScene extends Scene {
     resetButton.interactive = true
     resetButton.anchor.x = 0.5
     resetButton.anchor.y = 1
-    resetButton.x = WIDTH / 2 + resetButton.texture.width + 40
-    resetButton.y = HEIGHT - 10
+    resetButton.x = this.appWidth / 2 + resetButton.texture.width + 40
+    resetButton.y = this.appHeight - 30
     resetButton.on("pointerdown", () => this.reset())
     this.container.addChild(resetButton)
 
@@ -77,8 +83,8 @@ export class MainScene extends Scene {
     eraseButton.interactive = true
     eraseButton.anchor.x = 0.5
     eraseButton.anchor.y = 1
-    eraseButton.x = WIDTH / 2 - resetButton.texture.width - 40
-    eraseButton.y = HEIGHT - 10
+    eraseButton.x = this.appWidth / 2 - resetButton.texture.width - 40
+    eraseButton.y = this.appHeight - 30
     eraseButton.on("pointerdown", () => this.erase())
     this.container.addChild(eraseButton)
 
@@ -87,7 +93,7 @@ export class MainScene extends Scene {
     this.container.addChild(this.tips)
 
     this.tileCountText.x = 5
-    this.tileCountText.y = HEIGHT - 22
+    this.tileCountText.y = this.appHeight - 22
     this.container.addChild(this.tileCountText)
 
     this.initializeBoard()

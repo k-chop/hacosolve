@@ -127,10 +127,8 @@ export class InitScene extends Scene {
     if (solver.solution == null) {
       if (solver.message !== "") {
         this.tips.text = solver.message
-        console.log(solver.message)
       } else {
         this.tips.text = "cannot solve..."
-        console.log(this.tips)
       }
       for (const tile of this.tiles) {
         if (tile.state !== 0) {

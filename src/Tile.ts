@@ -94,8 +94,6 @@ export class Tile {
   }
 
   private onPointerDown = (_ev: { target: PIXI.Sprite }): void => {
-    console.log(`Pressed id ${this.id} tile.`)
-
     if (this.prevState !== 0) {
       this.state = 0
     } else {

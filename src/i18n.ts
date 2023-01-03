@@ -20,7 +20,7 @@ export const t = (key: keyof typeof messages): string => {
 }
 
 export const messages = {
-  placeTiles: { fallback: "Place tiles.", ja: "タイルを置いてください" },
+  placeTiles: { fallback: "Place tiles.", ja: "タイルを設置してください" },
   resetTiles: {
     fallback: "Reset tiles.",
     ja: "タイルをリセットしてください",
@@ -41,4 +41,10 @@ export const messages = {
     fallback: "sec",
     ja: "秒",
   },
+  notMod6: {
+    fallback: "Tiles must be placed in multiples of 6.",
+    ja: "タイルは6の倍数個設置してください",
+  },
 } satisfies { [id: string]: Translation }
+
+export type TranslationKey = keyof typeof messages

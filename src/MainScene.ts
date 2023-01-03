@@ -130,7 +130,7 @@ export class MainScene extends Scene {
         const data = event.data
         if (data.type === "result") {
           if (!data.solved) {
-            this.tips.text = data.message ? data.message : t("cannotSolve")
+            this.tips.text = data.message ? t(data.message) : t("cannotSolve")
             this.tiles.forEach((tile) => tile.error())
           } else {
             for (let idx = 0; idx < this.tiles.length; idx += 1) {

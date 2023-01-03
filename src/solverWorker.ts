@@ -1,5 +1,6 @@
 /// <reference lib="webworker" />
 
+import { TranslationKey } from "./i18n"
 import { Solver } from "./Solver"
 
 export type WorkerParams = {
@@ -10,7 +11,7 @@ export type WorkerParams = {
 export type WorkerResult = {
   type: "result"
   solved: boolean
-  message: string
+  message: TranslationKey
   solution: number[]
 }
 
@@ -27,8 +28,6 @@ self.addEventListener("message", (event) => {
   if (!solved) {
     if (solver.message !== "") {
       message = solver.message
-    } else {
-      message = "Cannot solve..."
     }
   }
   self.postMessage({

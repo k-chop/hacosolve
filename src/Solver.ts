@@ -6,13 +6,12 @@ export class Solver {
   public solution: number[] | undefined
   public skipCache: boolean[]
   public skipCacheHit = 0
-  public message: string
+  public message = ""
   public foundCubeCount: number
 
   public constructor() {
     this.net = new NetOfCube()
     this.skipCache = []
-    this.message = ""
     this.foundCubeCount = 0
   }
 
@@ -22,9 +21,8 @@ export class Solver {
     const sumTiles = ns.reduce((p, c) => p + c)
     // cant solve
     if (sumTiles % 6 !== 0) {
-      const mes = `sum of tiles is ${sumTiles}. cant solve because cannot mod 6.`
+      const mes = "notMod6"
       this.message = mes
-      console.log(mes)
 
       return ns
     }
@@ -51,7 +49,6 @@ export class Solver {
     const tileCount = (sumTiles / 6) | 0
     console.log(`start! cube count: ${tileCount}`)
     const ret = this.solve1(this.copy(ns), width, tileCount, tileCount, 2, sx, sy, sx, sy, lx, ly)
-    console.log(`skip_cache_hit: ${this.skipCacheHit}`)
 
     if (this.solution !== undefined) {
       this.foundCubeCount = (sumTiles / 6) | 0

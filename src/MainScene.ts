@@ -135,8 +135,9 @@ export class MainScene extends Scene {
             for (let idx = 0; idx < this.tiles.length; idx += 1) {
               this.tiles[idx].state = data.solution[idx]
             }
-            const elaspedTime = (performance.now() - beforeTime) / 1000
-            this.tips.text = `Found. elasped time: ${elaspedTime} sec`
+            const elapsedTime = (performance.now() - beforeTime) / 1000
+            const formattedElapsedTime = elapsedTime.toFixed(3)
+            this.tips.text = `Found. elapsed time: ${formattedElapsedTime} sec`
           }
         }
       },

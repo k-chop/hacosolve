@@ -1,6 +1,9 @@
 import * as PIXI from "pixi.js"
 import { Scene } from "./Scene"
 
+export const WIDTH = 600
+export const HEIGHT = 600
+
 /**
  * Game
  */

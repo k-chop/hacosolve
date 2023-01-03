@@ -1,4 +1,5 @@
 import { AutoGenerator } from "./AutoGenerator"
+import { HEIGHT, WIDTH } from "./Game"
 import { Scene } from "./Scene"
 import { Solver } from "./Solver"
 import { SpriteLoader } from "./SpriteLoader"
@@ -50,8 +51,8 @@ export class InitScene extends Scene {
     solveButton.interactive = true
     solveButton.anchor.x = 0.5
     solveButton.anchor.y = 1
-    solveButton.x = 600 / 2
-    solveButton.y = 600 - 10
+    solveButton.x = WIDTH / 2
+    solveButton.y = HEIGHT - 10
     solveButton.on("pointerdown", () => this.solveStart())
     this.container.addChild(solveButton)
 
@@ -59,8 +60,8 @@ export class InitScene extends Scene {
     resetButton.interactive = true
     resetButton.anchor.x = 0.5
     resetButton.anchor.y = 1
-    resetButton.x = 600 / 2 + resetButton.texture.width + 40
-    resetButton.y = 600 - 10
+    resetButton.x = WIDTH / 2 + resetButton.texture.width + 40
+    resetButton.y = HEIGHT - 10
     resetButton.on("pointerdown", () => this.reset())
     this.container.addChild(resetButton)
 
@@ -68,8 +69,8 @@ export class InitScene extends Scene {
     eraseButton.interactive = true
     eraseButton.anchor.x = 0.5
     eraseButton.anchor.y = 1
-    eraseButton.x = 600 / 2 - resetButton.texture.width - 40
-    eraseButton.y = 600 - 10
+    eraseButton.x = WIDTH / 2 - resetButton.texture.width - 40
+    eraseButton.y = HEIGHT - 10
     eraseButton.on("pointerdown", () => this.erase())
     this.container.addChild(eraseButton)
 

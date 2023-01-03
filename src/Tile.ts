@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js'
+import * as PIXI from "pixi.js"
 
 const TILE_HITBOX = new PIXI.Polygon(13, 0, 0, 7, 13, 13, 26, 7)
 
@@ -31,9 +31,9 @@ export class Tile {
     this.sprite = sprite
     this.sprite.hitArea = TILE_HITBOX
     this.sprite.interactive = true
-    this.sprite.on('mouseover', this.onMouseOver)
-    this.sprite.on('mouseout', this.onMouseOut)
-    this.sprite.on('pointerdown', this.onPointerDown)
+    this.sprite.on("mouseover", this.onMouseOver)
+    this.sprite.on("mouseout", this.onMouseOut)
+    this.sprite.on("pointerdown", this.onPointerDown)
     this.sprite.x = x
     this.sprite.y = y
   }

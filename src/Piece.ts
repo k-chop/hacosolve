@@ -33,7 +33,7 @@ export class Piece {
     // string -> boolean[]
     const ns = new Array<boolean>(pattern.length)
     for (let i = 0; i < pattern.length; i += 1) {
-      if (pattern[i] !== ' ') {
+      if (pattern[i] !== " ") {
         ns[i] = true
       } else {
         ns[i] = false
@@ -182,15 +182,15 @@ export class Piece {
 
   // デバッグ出力用
   public toString(): string {
-    let ret = '\n'
+    let ret = "\n"
     for (let i = 0; i < this.internal.length; i += 1) {
       if (this.internal[i]) {
-        ret += '#'
+        ret += "#"
       } else {
-        ret += ' '
+        ret += " "
       }
       if ((i + 1) % this.width === 0) {
-        ret += '\n'
+        ret += "\n"
       }
     }
 

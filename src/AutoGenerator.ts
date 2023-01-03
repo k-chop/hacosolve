@@ -1,5 +1,5 @@
-import { NetOfCube } from './NetOfCube'
-import * as util from './util'
+import { NetOfCube } from "./NetOfCube"
+import * as util from "./util"
 
 export class AutoGenerator {
   public net: NetOfCube
@@ -38,7 +38,7 @@ export class AutoGenerator {
           ns = p.filled(ns, this.width, x, y, 1)
           continue
         } else {
-          console.log('cannot init field.')
+          console.log("cannot init field.")
           break
         }
       }
@@ -62,7 +62,7 @@ export class AutoGenerator {
       if (px !== -1 && py !== -1 && pn !== -1) {
         ns = p.filled(ns, this.width, px, py, 1)
       } else {
-        console.log('something wrong :(')
+        console.log("something wrong :(")
       }
     }
 

@@ -1,5 +1,5 @@
-import * as PIXI from 'pixi.js'
-import { Scene } from './Scene'
+import * as PIXI from "pixi.js"
+import { Scene } from "./Scene"
 
 /**
  * Game
@@ -16,7 +16,7 @@ export class Game {
   public run(): void {
     this.currentScene.create()
     this.app.stage.addChild(this.currentScene.container)
-    this.app.ticker.add(_deltatime => {
+    this.app.ticker.add((_deltatime) => {
       this.update()
       this.render()
     })

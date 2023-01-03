@@ -1,4 +1,4 @@
-import { NetOfCube } from './NetOfCube'
+import { NetOfCube } from "./NetOfCube"
 
 export class Solver {
   public net: NetOfCube
@@ -12,7 +12,7 @@ export class Solver {
   public constructor() {
     this.net = new NetOfCube()
     this.skipCache = []
-    this.message = ''
+    this.message = ""
     this.foundCubeCount = 0
   }
 

@@ -1,8 +1,8 @@
-import { AutoGenerator } from './AutoGenerator'
-import { Scene } from './Scene'
-import { Solver } from './Solver'
-import { SpriteLoader } from './SpriteLoader'
-import { Tile } from './Tile'
+import { AutoGenerator } from "./AutoGenerator"
+import { Scene } from "./Scene"
+import { Solver } from "./Solver"
+import { SpriteLoader } from "./SpriteLoader"
+import { Tile } from "./Tile"
 
 /**
  * InitScene
@@ -17,11 +17,11 @@ export class InitScene extends Scene {
   private spriteLoader: SpriteLoader
 
   public constructor() {
-    super('init')
+    super("init")
 
     this.spriteLoader = new SpriteLoader()
     this.tiles = new Array<Tile>()
-    this.tips = new PIXI.Text('', { fill: ['#fff'], fontSize: 16 })
+    this.tips = new PIXI.Text("", { fill: ["#fff"], fontSize: 16 })
     this.gen = new AutoGenerator(this.SIZE_X, this.SIZE_Y)
   }
 
@@ -32,7 +32,7 @@ export class InitScene extends Scene {
   public async create(): Promise<void> {
     await this.load()
 
-    const solveButton = this.spriteLoader.getSprite('solveButton')
+    const solveButton = this.spriteLoader.getSprite("solveButton")
 
     for (let col = 0; col < this.SIZE_Y; col += 1) {
       for (let row = 0; row < this.SIZE_X; row += 1) {
@@ -40,7 +40,7 @@ export class InitScene extends Scene {
         const x = 0 + row * 12 - col * 12 + 280
         const y = 0 + col * 6 + row * 6 + 200
 
-        const tileSprite = this.spriteLoader.getSprite('tile')
+        const tileSprite = this.spriteLoader.getSprite("tile")
 
         const tile = new Tile(idx, tileSprite, x, y)
         this.container.addChild(tile.sprite)
@@ -49,12 +49,12 @@ export class InitScene extends Scene {
     }
 
     solveButton.interactive = true
-    solveButton.on('pointerdown', () => {
+    solveButton.on("pointerdown", () => {
       this.solveStart()
     })
     this.container.addChild(solveButton)
 
-    this.tips = new PIXI.Text('', { fill: ['#fff'], fontSize: 16 })
+    this.tips = new PIXI.Text("", { fill: ["#fff"], fontSize: 16 })
     this.tips.x = 5
     this.tips.y = 600 - 20
 
@@ -64,7 +64,7 @@ export class InitScene extends Scene {
   }
 
   public destroy(): void {
-    throw new Error('Method not implemented.')
+    throw new Error("Method not implemented.")
   }
 
   private async load(): Promise<void> {
@@ -78,12 +78,12 @@ export class InitScene extends Scene {
     if (isFresh) {
       if (isBlankAll) {
         this.tips.text =
-          'Place tiles with click, or press number key for auto-generate.'
+          "Place tiles with click, or press number key for auto-generate."
         return
       }
     } else {
       this.tips.text =
-        'You need reset. browser reload is only way to reset tiles so sorry my bad'
+        "You need reset. browser reload is only way to reset tiles so sorry my bad"
       return
     }
 
@@ -94,11 +94,11 @@ export class InitScene extends Scene {
     solver.solve(board, this.SIZE_X)
 
     if (solver.solution == null) {
-      if (solver.message !== '') {
+      if (solver.message !== "") {
         this.tips.text = solver.message
         console.log(solver.message)
       } else {
-        this.tips.text = 'cannot solve...'
+        this.tips.text = "cannot solve..."
         console.log(this.tips)
       }
       for (const tile of this.tiles) {

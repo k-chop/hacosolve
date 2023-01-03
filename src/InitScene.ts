@@ -5,6 +5,7 @@ import { SpriteLoader } from "./SpriteLoader"
 import { Tile } from "./Tile"
 import SolverWorker from "./solverWorker?worker&inline"
 import { WorkerResult } from "./solverWorker"
+import * as PIXI from "pixi.js"
 
 /**
  * InitScene

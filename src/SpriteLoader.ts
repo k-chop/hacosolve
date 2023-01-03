@@ -17,7 +17,7 @@ export type TextureKey = keyof typeof textures
  * SpriteLoader
  */
 export class SpriteLoader {
-  public loader = PIXI.loader
+  public loader = new PIXI.Loader()
   private textureLoaded = false
   private textureMap: TextureMap
 
@@ -31,18 +31,16 @@ export class SpriteLoader {
     })
 
     return new Promise((resolve) => {
-      this.loader.load(
-        (
-          loader: PIXI.loaders.Loader,
-          resources: { [key: string]: { texture: PIXI.Texture } }
-        ) => {
-          Object.keys(resources).forEach((key) => {
-            this.textureMap.set(key, resources[key].texture)
-          })
-          this.textureLoaded = true
-          resolve()
-        }
-      )
+      this.loader.load((_loader, resources) => {
+        Object.keys(resources).forEach((key) => {
+          const resource = resources[key]
+          if (resource) {
+            this.textureMap.set(key, resource.texture)
+          }
+        })
+        this.textureLoaded = true
+        resolve()
+      })
     })
   }
 

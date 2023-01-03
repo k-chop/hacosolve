@@ -8,7 +8,9 @@ import { InitScene } from "./InitScene"
 window.onload = () => {
   document.body.style.margin = "5rem 0"
 
-  const app = new PIXI.Application(WIDTH, HEIGHT, {
+  const app = new PIXI.Application({
+    width: WIDTH,
+    height: HEIGHT,
     backgroundColor: 0x061639,
   })
   const wrapper = document.createElement("div")

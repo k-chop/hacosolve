@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js"
 
-const TILE_HITBOX = new PIXI.Polygon(13, 0, 0, 7, 13, 13, 26, 7)
+const TILE_HITBOX = new PIXI.Polygon([13, 0, 0, 7, 13, 13, 26, 7])
 
 const STATE_COLOR_MAP: { [state: number]: number } = {
   1: 0xffffff,

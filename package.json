@@ -13,11 +13,10 @@
     "private": true,
     "dependencies": {
         "howler": "^2.2.3",
-        "pixi.js": "5.3.12"
+        "pixi.js": "6.5.8"
     },
     "devDependencies": {
         "@types/howler": "^2.2.7",
-        "@types/pixi.js": "^5.0.0",
         "@typescript-eslint/eslint-plugin": "^5.48.0",
         "@typescript-eslint/parser": "^5.48.0",
         "eslint": "^8.31.0",

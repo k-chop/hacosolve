@@ -34,7 +34,7 @@ export class SpriteLoader {
       this.loader.load((_loader, resources) => {
         Object.keys(resources).forEach((key) => {
           const resource = resources[key]
-          if (resource) {
+          if (resource && resource.texture) {
             this.textureMap.set(key, resource.texture)
           }
         })

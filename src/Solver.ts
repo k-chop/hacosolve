@@ -50,19 +50,7 @@ export class Solver {
 
     const tileCount = (sumTiles / 6) | 0
     console.log(`start! cube count: ${tileCount}`)
-    const ret = this.solve1(
-      this.copy(ns),
-      width,
-      tileCount,
-      tileCount,
-      2,
-      sx,
-      sy,
-      sx,
-      sy,
-      lx,
-      ly
-    )
+    const ret = this.solve1(this.copy(ns), width, tileCount, tileCount, 2, sx, sy, sx, sy, lx, ly)
     console.log(`skip_cache_hit: ${this.skipCacheHit}`)
 
     if (this.solution !== undefined) {
@@ -127,13 +115,7 @@ export class Solver {
       if (x >= 0 && x < width && y >= 0 && y < height && !mark[y * width + x]) {
         mark[y * width + x] = true
         if (ns[y * width + x] === 1) {
-          return (
-            1 +
-            recur(x + 1, y) +
-            recur(x, y + 1) +
-            recur(x, y - 1) +
-            recur(x - 1, y)
-          )
+          return 1 + recur(x + 1, y) + recur(x, y + 1) + recur(x, y - 1) + recur(x - 1, y)
         } else {
           return 0
         }
@@ -198,19 +180,7 @@ export class Solver {
 
               return ns
             } else {
-              this.solve1(
-                a,
-                w,
-                count - 1,
-                countMax,
-                fillNum + 1,
-                sx,
-                sy,
-                x,
-                y,
-                lx,
-                ly
-              )
+              this.solve1(a, w, count - 1, countMax, fillNum + 1, sx, sy, x, y, lx, ly)
             }
           }
         }

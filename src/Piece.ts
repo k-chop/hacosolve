@@ -124,13 +124,7 @@ export class Piece {
     return true
   }
 
-  public filled(
-    ns: number[],
-    nsWidth: number,
-    x: number,
-    y: number,
-    fillNumber: number
-  ): number[] {
+  public filled(ns: number[], nsWidth: number, x: number, y: number, fillNumber: number): number[] {
     const ret = [...ns]
     for (let i = 0; i < this.height; i += 1) {
       for (let j = 0; j < this.width; j += 1) {
@@ -168,11 +162,7 @@ export class Piece {
     const h = this.height
 
     for (let toIdx = 0, row = 0; toIdx < l; row += 1) {
-      for (
-        let fromIdx = (h - 1) * w + row;
-        fromIdx >= 0;
-        fromIdx -= w, toIdx += 1
-      ) {
+      for (let fromIdx = (h - 1) * w + row; fromIdx >= 0; fromIdx -= w, toIdx += 1) {
         ns[toIdx] = this.internal[fromIdx]
       }
     }

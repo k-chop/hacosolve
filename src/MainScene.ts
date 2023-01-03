@@ -103,13 +103,13 @@ export class MainScene extends Scene {
 
   private erase(): void {
     this.tiles.forEach((tile) => tile.erase())
-    this.tips.text = ""
+    this.setTips()
     this.updateTileCount()
   }
 
   private reset(): void {
     this.tiles.forEach((tile) => tile.reset())
-    this.tips.text = ""
+    this.setTips()
     this.updateTileCount()
   }
 
@@ -119,11 +119,11 @@ export class MainScene extends Scene {
 
     if (isFresh) {
       if (isBlankAll) {
-        this.tips.text = t("placeTiles")
+        this.setTips(t("placeTiles"))
         return
       }
     } else {
-      this.tips.text = t("resetTiles")
+      this.setTips(t("resetTiles"))
       return
     }
 
@@ -138,7 +138,7 @@ export class MainScene extends Scene {
         const data = event.data
         if (data.type === "result") {
           if (!data.solved) {
-            this.tips.text = data.message ? t(data.message) : t("cannotSolve")
+            this.setTips(data.message ? t(data.message) : t("cannotSolve"))
             this.tiles.forEach((tile) => tile.error())
           } else {
             for (let idx = 0; idx < this.tiles.length; idx += 1) {
@@ -146,7 +146,7 @@ export class MainScene extends Scene {
             }
             const elapsedTime = (performance.now() - beforeTime) / 1000
             const formattedElapsedTime = `${elapsedTime.toFixed(3)} ${t("sec")}`
-            this.tips.text = `${t("found")} ${t("elapsedTime")} ${formattedElapsedTime}`
+            this.setTips(`${t("found")} ${t("elapsedTime")} ${formattedElapsedTime}`)
           }
         }
       },
@@ -178,5 +178,9 @@ export class MainScene extends Scene {
   public updateTileCount(): void {
     this.tileCount = this.tiles.reduce((a, b) => a + (b.isBlank() ? 0 : 1), 0)
     this.tileCountText.text = "Tiles: " + this.tileCount + ` (% 6 == ${this.tileCount % 6})`
+  }
+
+  public setTips(message = ""): void {
+    this.tips.text = message
   }
 }

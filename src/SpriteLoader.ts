@@ -24,14 +24,14 @@ export class SpriteLoader {
     })
   }
 
-  public async load(): Promise<void> {
-    return new Promise(resolve => {
+  public load(): Promise<void> {
+    return new Promise((resolve) => {
       this.loader.load(
         (
           loader: PIXI.loaders.Loader,
           resources: { [key: string]: { texture: PIXI.Texture } }
         ) => {
-          Object.keys(resources).forEach(key => {
+          Object.keys(resources).forEach((key) => {
             this.textureMap.set(key, resources[key].texture)
           })
           this.loaded = true
@@ -41,19 +41,17 @@ export class SpriteLoader {
     })
   }
 
-  public sprite(id: string): PIXI.Sprite | null {
+  public getSprite(id: string): PIXI.Sprite {
     if (!this.loaded) {
-      return null
-    } else {
-      return new PIXI.Sprite(this.textureMap.get(id))
+      throw new Error('Attempt to load before load')
     }
+    return new PIXI.Sprite(this.textureMap.get(id))
   }
 
-  public sprites(ids: string[]): PIXI.Sprite[] | null {
+  public getSprites(ids: string[]): PIXI.Sprite[] {
     if (!this.loaded) {
-      return null
-    } else {
-      return ids.map(id => this.sprite(id)!)
+      throw new Error('Attempt to load before load')
     }
+    return ids.map((id) => this.getSprite(id))
   }
 }

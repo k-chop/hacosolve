@@ -18,6 +18,7 @@ export class InitScene extends Scene {
 
   public constructor() {
     super('init')
+
     this.spriteLoader = new SpriteLoader()
     this.tiles = new Array<Tile>()
     this.tips = new PIXI.Text('', { fill: ['#fff'], fontSize: 16 })
@@ -31,24 +32,27 @@ export class InitScene extends Scene {
   public async create(): Promise<void> {
     await this.load()
 
+    const solveButton = this.spriteLoader.getSprite('btn_solve')
+
     for (let col = 0; col < this.SIZE_Y; col += 1) {
       for (let row = 0; row < this.SIZE_X; row += 1) {
         const idx = col * this.SIZE_X + row
         const x = 0 + row * 12 - col * 12 + 280
         const y = 0 + col * 6 + row * 6 + 200
 
-        const tileSprite = this.spriteLoader.sprite('tileA')
-        const tile = new Tile(idx, tileSprite!, x, y)
+        const tileSprite = this.spriteLoader.getSprite('tileA')
+
+        const tile = new Tile(idx, tileSprite, x, y)
         this.container.addChild(tile.sprite)
         this.tiles[idx] = tile
       }
     }
-    const solveButton = this.spriteLoader.sprite('btn_solve')
-    solveButton!.interactive = true
-    solveButton!.on('pointerdown', () => {
+
+    solveButton.interactive = true
+    solveButton.on('pointerdown', () => {
       this.solveStart()
     })
-    this.container.addChild(solveButton!)
+    this.container.addChild(solveButton)
 
     this.tips = new PIXI.Text('', { fill: ['#fff'], fontSize: 16 })
     this.tips.x = 5
@@ -90,8 +94,10 @@ export class InitScene extends Scene {
 
     const beforeTime = performance.now()
     const solver = new Solver()
-    const numbers = this.tiles.map((tile) => tile.state)
-    solver.solve(numbers, this.SIZE_X)
+    const board = this.tiles.map((tile) => tile.state)
+
+    solver.solve(board, this.SIZE_X)
+
     if (solver.solution == null) {
       if (solver.message !== '') {
         this.tips.text = solver.message
@@ -112,7 +118,7 @@ export class InitScene extends Scene {
       const elaspedTime = (performance.now() - beforeTime) / 1000
       this.tips.text = `Found ${solver.foundCubeCount} cubes. elasped time: ${elaspedTime} sec`
     }
-    this.coloring()
+    this.applyColor()
   }
 
   private initializeBoard(): void {
@@ -120,16 +126,17 @@ export class InitScene extends Scene {
   }
 
   private generate(cubeNum: number): void {
-    const ns = this.gen.generate(cubeNum)
-    for (let idx = 0; idx < ns.length; idx += 1) {
-      this.tiles[idx].state = ns[idx]
+    const board = this.gen.generate(cubeNum)
+
+    for (let idx = 0; idx < board.length; idx += 1) {
+      this.tiles[idx].state = board[idx]
     }
-    this.coloring()
+    this.applyColor()
   }
 
-  private coloring(): void {
+  private applyColor(): void {
     for (const tile of this.tiles) {
-      tile.coloring()
+      tile.applyColor()
     }
   }
 }

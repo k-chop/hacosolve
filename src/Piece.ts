@@ -1,17 +1,17 @@
 export class Piece {
   public internal: boolean[]
-  public internalNumber: number
+  public id: number
   public width: number
   public height: number
 
   public constructor(ns: boolean[], width: number) {
     this.internal = [...ns]
-    this.internalNumber = Piece.calcInternalNumber(ns, width)
+    this.id = Piece.calcId(ns, width)
     this.width = width
     this.height = Math.floor(ns.length / width)
   }
 
-  public static calcInternalNumber(arr: boolean[], width: number): number {
+  public static calcId(arr: boolean[], width: number): number {
     let ret = 0
     let e = 1
     let idx = arr.length - 1
@@ -44,7 +44,7 @@ export class Piece {
   }
 
   public eq(that: Piece): boolean {
-    return this.internalNumber === that.internalNumber
+    return this.id === that.id
   }
 
   public at(x: number, y: number): boolean | undefined {

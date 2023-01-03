@@ -25,17 +25,20 @@ export class NetOfCube {
   // 同じ形状のピースを除いた全ての候補のリストを返す
   public allCandidates(): Piece[] {
     const all: Piece[] = []
+
     for (const piece of this.pieces) {
       all.push(...piece.variations())
     }
 
     const dist: Piece[] = []
     const checked: Set<number> = new Set<number>()
+
     for (const piece of all) {
-      const hash = piece.internalNumber
-      if (!checked.has(hash)) {
+      const id = piece.id
+
+      if (!checked.has(id)) {
         dist.push(piece)
-        checked.add(hash)
+        checked.add(id)
       }
     }
 

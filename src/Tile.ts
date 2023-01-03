@@ -17,9 +17,11 @@ export class Tile {
   public sprite: PIXI.Sprite
   private currentState = 0
   private prevState = 0
+
   public get state(): number {
     return this.currentState
   }
+
   public set state(newState: number) {
     this.currentState = newState
   }
@@ -44,7 +46,7 @@ export class Tile {
     return this.state === 0
   }
 
-  public coloring(state: number = this.currentState): void {
+  public applyColor(state: number = this.currentState): void {
     if (state !== this.currentState) {
       this.currentState = state
     }
@@ -61,22 +63,23 @@ export class Tile {
   private onMouseOver = (_ev: { target: PIXI.Sprite }): void => {
     this.prevState = this.currentState
     this.currentState = 7
-    this.coloring()
+    this.applyColor()
   }
 
   private onMouseOut = (_ev: { currentTarget: PIXI.Sprite }): void => {
     this.currentState = this.prevState
-    this.coloring()
+    this.applyColor()
   }
 
   private onPointerDown = (_ev: { target: PIXI.Sprite }): void => {
     console.log(`Pressed id ${this.id} tile.`)
+
     if (this.prevState !== 0) {
       this.state = 0
     } else {
       this.state = 1
     }
     this.prevState = this.state
-    this.coloring()
+    this.applyColor()
   }
 }

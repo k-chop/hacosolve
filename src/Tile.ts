@@ -15,8 +15,8 @@ const STATE_COLOR_MAP: { [state: number]: number } = {
 export class Tile {
   public id: number
   public sprite: PIXI.Sprite
-  private currentState = 0
-  private prevState = 0
+  private currentState = -1
+  private hovered = false
   private onChangeTile?: () => void
 
   public get state(): number {
@@ -24,7 +24,13 @@ export class Tile {
   }
 
   public set state(newState: number) {
+    const prevState = this.currentState
+
     this.currentState = newState
+
+    if (prevState !== newState) {
+      this.applyColor()
+    }
   }
 
   public constructor(
@@ -68,39 +74,35 @@ export class Tile {
     return this.state === 5
   }
 
-  public applyColor(state: number = this.currentState): void {
-    if (state !== this.currentState) {
-      this.currentState = state
-    }
-    if (state === 0) {
+  public applyColor(): void {
+    if (this.hovered) {
+      this.sprite.alpha = 1
+      this.sprite.tint = 0x00ff00
+    } else if (this.state === 0) {
       this.sprite.tint = 0xffffff
       this.sprite.alpha = 0.2
     } else {
       this.sprite.alpha = 1
-      const color = STATE_COLOR_MAP[state]
-      this.sprite.tint = color
+      this.sprite.tint = STATE_COLOR_MAP[this.state]
     }
   }
 
   private onMouseOver = (_ev: { target: PIXI.Sprite }): void => {
-    this.prevState = this.currentState
-    this.currentState = 7
+    this.hovered = true
     this.applyColor()
   }
 
   private onMouseOut = (_ev: { currentTarget: PIXI.Sprite }): void => {
-    this.currentState = this.prevState
+    this.hovered = false
     this.applyColor()
   }
 
   private onPointerDown = (_ev: { target: PIXI.Sprite }): void => {
-    if (this.prevState !== 0) {
+    if (this.state !== 0) {
       this.state = 0
     } else {
       this.state = 1
     }
-    this.prevState = this.state
-    this.applyColor()
 
     this.onChangeTile?.()
   }

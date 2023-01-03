@@ -92,13 +92,11 @@ export class InitScene extends Scene {
 
   private erase(): void {
     this.tiles.forEach((tile) => tile.erase())
-    this.applyColor()
     this.tips.text = ""
   }
 
   private reset(): void {
     this.tiles.forEach((tile) => tile.reset())
-    this.applyColor()
     this.tips.text = ""
   }
 
@@ -141,7 +139,6 @@ export class InitScene extends Scene {
       const elaspedTime = (performance.now() - beforeTime) / 1000
       this.tips.text = `Found ${solver.foundCubeCount} cubes. elasped time: ${elaspedTime} sec`
     }
-    this.applyColor()
   }
 
   private initializeBoard(): void {
@@ -153,13 +150,6 @@ export class InitScene extends Scene {
 
     for (let idx = 0; idx < board.length; idx += 1) {
       this.tiles[idx].state = board[idx]
-    }
-    this.applyColor()
-  }
-
-  private applyColor(): void {
-    for (const tile of this.tiles) {
-      tile.applyColor()
     }
   }
 

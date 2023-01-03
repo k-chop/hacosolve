@@ -28,11 +28,13 @@ self.addEventListener("message", (event) => {
     if (solver.message !== "") {
       message = solver.message
     } else {
-      message = "cannot solve..."
+      message = "Cannot solve..."
     }
   }
   self.postMessage({
     type: "result",
-    result: { solved, message, solution: solver.solution },
+    solved,
+    message,
+    solution: solver.solution,
   })
 })

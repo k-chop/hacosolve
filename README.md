@@ -1,7 +1,11 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/620ef709-295d-4495-a3ee-37b54a83dfa7/deploy-status)](https://app.netlify.com/sites/hacosolve/deploys)
+👉 https://k-chop.github.io/hacosolve/
 
-# hacosolve
-![sample](https://raw.githubusercontent.com/whelmaze/hacosolve/master/images/screenshot.png)
+# HACOSOLVE
 
-# demo
-https://hacosolve.netlify.com/
+This is a cheat tool in HACOLIFE / BOXLIFE trial mode.
+
+Made to unlock level 10 of factory mode.
+
+# Screenshot
+
+![sample](https://raw.githubusercontent.com/whelmaze/hacosolve/main/images/screenshot.png)

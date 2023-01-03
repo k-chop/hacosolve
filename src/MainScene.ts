@@ -8,9 +8,9 @@ import { WorkerResult } from "./solverWorker"
 import * as PIXI from "pixi.js"
 
 /**
- * InitScene
+ * MainScene
  */
-export class InitScene extends Scene {
+export class MainScene extends Scene {
   public SIZE_X = 20
   public SIZE_Y = 20
   public gen: AutoGenerator
@@ -20,7 +20,7 @@ export class InitScene extends Scene {
   private spriteLoader: SpriteLoader
 
   public constructor() {
-    super("init")
+    super("main")
 
     this.spriteLoader = new SpriteLoader()
     this.tiles = new Array<Tile>()

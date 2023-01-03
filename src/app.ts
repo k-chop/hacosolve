@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js"
 import { Game, HEIGHT, WIDTH } from "./Game"
-import { InitScene } from "./InitScene"
+import { MainScene } from "./MainScene"
 
 /**
  * entry point
@@ -22,6 +22,6 @@ window.onload = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   wrapper.appendChild(app.view as any)
 
-  const game = new Game(app, new InitScene())
+  const game = new Game(app, new MainScene())
   game.run()
 }

@@ -6,6 +6,7 @@ import { Tile } from "./Tile"
 import SolverWorker from "./solverWorker?worker&inline"
 import { WorkerResult } from "./solverWorker"
 import * as PIXI from "pixi.js"
+import { t } from "./i18n"
 
 const worker = new SolverWorker()
 
@@ -110,11 +111,11 @@ export class MainScene extends Scene {
 
     if (isFresh) {
       if (isBlankAll) {
-        this.tips.text = "Place tiles."
+        this.tips.text = t("placeTiles")
         return
       }
     } else {
-      this.tips.text = "Reset tiles."
+      this.tips.text = t("resetTiles")
       return
     }
 
@@ -129,15 +130,15 @@ export class MainScene extends Scene {
         const data = event.data
         if (data.type === "result") {
           if (!data.solved) {
-            this.tips.text = data.message ? data.message : "Cannot solve..."
+            this.tips.text = data.message ? data.message : t("cannotSolve")
             this.tiles.forEach((tile) => tile.error())
           } else {
             for (let idx = 0; idx < this.tiles.length; idx += 1) {
               this.tiles[idx].state = data.solution[idx]
             }
             const elapsedTime = (performance.now() - beforeTime) / 1000
-            const formattedElapsedTime = elapsedTime.toFixed(3)
-            this.tips.text = `Found. elapsed time: ${formattedElapsedTime} sec`
+            const formattedElapsedTime = `${elapsedTime.toFixed(3)} ${t("sec")}`
+            this.tips.text = `${t("found")} ${t("elapsedTime")} ${formattedElapsedTime}`
           }
         }
       },
@@ -158,9 +159,7 @@ export class MainScene extends Scene {
   }
 
   public onChangeTile(): void {
-    const isError = this.tiles.every(
-      (tile) => tile.isError() || tile.canSolve()
-    )
+    const isError = this.tiles.every((tile) => tile.isError() || tile.canSolve())
     if (isError) {
       this.reset()
     }

@@ -106,8 +106,7 @@ export class InitScene extends Scene {
 
     if (isFresh) {
       if (isBlankAll) {
-        this.tips.text =
-          "Place tiles with click, or press number key for auto-generate."
+        this.tips.text = "Place tiles."
         return
       }
     } else {

@@ -77,7 +77,6 @@ export class InitScene extends Scene {
     this.tips = new PIXI.Text("", { fill: ["#fff"], fontSize: 16 })
     this.tips.x = 5
     this.tips.y = 5
-
     this.container.addChild(this.tips)
 
     this.initializeBoard()
@@ -87,8 +86,8 @@ export class InitScene extends Scene {
     throw new Error("Method not implemented.")
   }
 
-  private async load(): Promise<void> {
-    await this.spriteLoader.load()
+  private load(): Promise<void> {
+    return this.spriteLoader.load()
   }
 
   private erase(): void {

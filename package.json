@@ -13,7 +13,7 @@
     "private": true,
     "dependencies": {
         "howler": "^2.2.3",
-        "pixi.js": "6.5.8"
+        "pixi.js": "^7.0.5"
     },
     "devDependencies": {
         "@types/howler": "^2.2.7",

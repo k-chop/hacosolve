@@ -19,7 +19,8 @@ window.onload = () => {
   wrapper.style.alignItems = "center"
 
   document.body.appendChild(wrapper)
-  wrapper.appendChild(app.view)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  wrapper.appendChild(app.view as any)
 
   const game = new Game(app, new InitScene())
   game.run()

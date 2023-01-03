@@ -89,17 +89,17 @@ export class Tile {
     }
   }
 
-  private onMouseOver = (_ev: { target: PIXI.Sprite }): void => {
+  private onMouseOver = (): void => {
     this.hovered = true
     this.applyColor()
   }
 
-  private onMouseOut = (_ev: { currentTarget: PIXI.Sprite }): void => {
+  private onMouseOut = (): void => {
     this.hovered = false
     this.applyColor()
   }
 
-  private onPointerDown = (_ev: { target: PIXI.Sprite }): void => {
+  private onPointerDown = (): void => {
     if (this.state !== 0) {
       this.state = 0
     } else {

@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js"
+import { Assets } from "pixi.js"
 
 type TextureMap = Map<string, PIXI.Texture>
 
@@ -17,7 +18,6 @@ export type TextureKey = keyof typeof textures
  * SpriteLoader
  */
 export class SpriteLoader {
-  public loader = new PIXI.Loader()
   private textureLoaded = false
   private textureMap: TextureMap
 
@@ -25,23 +25,15 @@ export class SpriteLoader {
     this.textureMap = new Map<string, PIXI.Texture>()
   }
 
-  public load(): Promise<void> {
-    Object.entries(textures).forEach(([id, url]) => {
-      this.loader.add(id, url)
-    })
-
-    return new Promise((resolve) => {
-      this.loader.load((_loader, resources) => {
-        Object.keys(resources).forEach((key) => {
-          const resource = resources[key]
-          if (resource && resource.texture) {
-            this.textureMap.set(key, resource.texture)
-          }
+  public async load(): Promise<void> {
+    await Promise.all(
+      Object.entries(textures).map(([id, url]) =>
+        Assets.load(url).then((texture) => {
+          if (texture) this.textureMap.set(id, texture)
         })
-        this.textureLoaded = true
-        resolve()
-      })
-    })
+      )
+    )
+    this.textureLoaded = true
   }
 
   public getSprite(id: TextureKey): PIXI.Sprite {

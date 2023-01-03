@@ -32,8 +32,6 @@ export class InitScene extends Scene {
   public async create(): Promise<void> {
     await this.load()
 
-    const solveButton = this.spriteLoader.getSprite("solveButton")
-
     for (let col = 0; col < this.SIZE_Y; col += 1) {
       for (let row = 0; row < this.SIZE_X; row += 1) {
         const idx = col * this.SIZE_X + row
@@ -48,15 +46,36 @@ export class InitScene extends Scene {
       }
     }
 
+    const solveButton = this.spriteLoader.getSprite("solveButton")
     solveButton.interactive = true
-    solveButton.on("pointerdown", () => {
-      this.solveStart()
-    })
+    solveButton.anchor.x = 0.5
+    solveButton.anchor.y = 1
+    solveButton.x = 600 / 2
+    solveButton.y = 600 - 10
+    solveButton.on("pointerdown", () => this.solveStart())
     this.container.addChild(solveButton)
+
+    const resetButton = this.spriteLoader.getSprite("resetButton")
+    resetButton.interactive = true
+    resetButton.anchor.x = 0.5
+    resetButton.anchor.y = 1
+    resetButton.x = 600 / 2 + resetButton.texture.width + 40
+    resetButton.y = 600 - 10
+    resetButton.on("pointerdown", () => this.reset())
+    this.container.addChild(resetButton)
+
+    const eraseButton = this.spriteLoader.getSprite("eraseButton")
+    eraseButton.interactive = true
+    eraseButton.anchor.x = 0.5
+    eraseButton.anchor.y = 1
+    eraseButton.x = 600 / 2 - resetButton.texture.width - 40
+    eraseButton.y = 600 - 10
+    eraseButton.on("pointerdown", () => this.erase())
+    this.container.addChild(eraseButton)
 
     this.tips = new PIXI.Text("", { fill: ["#fff"], fontSize: 16 })
     this.tips.x = 5
-    this.tips.y = 600 - 20
+    this.tips.y = 5
 
     this.container.addChild(this.tips)
 
@@ -69,6 +88,18 @@ export class InitScene extends Scene {
 
   private async load(): Promise<void> {
     await this.spriteLoader.load()
+  }
+
+  private erase(): void {
+    this.tiles.forEach((tile) => tile.erase())
+    this.applyColor()
+    this.tips.text = ""
+  }
+
+  private reset(): void {
+    this.tiles.forEach((tile) => tile.reset())
+    this.applyColor()
+    this.tips.text = ""
   }
 
   private solveStart(): void {

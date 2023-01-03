@@ -6,6 +6,7 @@ export type TextureResource = { [id: string]: string }
 
 export const textures = {
   eraseButton: "./assets/image/button_erase.png",
+  resetButton: "./assets/image/button_reset.png",
   solveButton: "./assets/image/button_solve.png",
   tile: "./assets/image/tile00a.png",
 } as const satisfies TextureResource

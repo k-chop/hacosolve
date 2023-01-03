@@ -38,6 +38,16 @@ export class Tile {
     this.sprite.y = y
   }
 
+  public erase(): void {
+    this.state = 0
+  }
+
+  public reset(): void {
+    if (this.state !== 0) {
+      this.state = 1
+    }
+  }
+
   public canSolve(): boolean {
     return this.state === 0 || this.state === 1
   }

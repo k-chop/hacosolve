@@ -7,6 +7,8 @@ import SolverWorker from "./solverWorker?worker&inline"
 import { WorkerResult } from "./solverWorker"
 import * as PIXI from "pixi.js"
 
+const worker = new SolverWorker()
+
 /**
  * MainScene
  */
@@ -119,7 +121,6 @@ export class MainScene extends Scene {
     const beforeTime = performance.now()
     const board = this.tiles.map((tile) => tile.state)
 
-    const worker = new SolverWorker()
     worker.postMessage({ board, width: this.SIZE_X })
 
     worker.addEventListener(

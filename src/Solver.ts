@@ -16,6 +16,7 @@ export class Solver {
   }
 
   public solve(ns: number[], width: number): number[] {
+    this.message = ""
     this.solution = undefined
     // ns contains 0 or 1 only
     const sumTiles = ns.reduce((p, c) => p + c)

@@ -32,7 +32,7 @@ export class InitScene extends Scene {
   public async create(): Promise<void> {
     await this.load()
 
-    const solveButton = this.spriteLoader.getSprite('btn_solve')
+    const solveButton = this.spriteLoader.getSprite('solveButton')
 
     for (let col = 0; col < this.SIZE_Y; col += 1) {
       for (let row = 0; row < this.SIZE_X; row += 1) {
@@ -40,7 +40,7 @@ export class InitScene extends Scene {
         const x = 0 + row * 12 - col * 12 + 280
         const y = 0 + col * 6 + row * 6 + 200
 
-        const tileSprite = this.spriteLoader.getSprite('tileA')
+        const tileSprite = this.spriteLoader.getSprite('tile')
 
         const tile = new Tile(idx, tileSprite, x, y)
         this.container.addChild(tile.sprite)
@@ -68,11 +68,6 @@ export class InitScene extends Scene {
   }
 
   private async load(): Promise<void> {
-    this.spriteLoader.addAll([
-      ['btn_erase', './assets/image/button_erase.png'],
-      ['btn_solve', './assets/image/button_solve.png'],
-      ['tileA', './assets/image/tile00a.png'],
-    ])
     await this.spriteLoader.load()
   }
 

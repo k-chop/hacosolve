@@ -19,8 +19,10 @@ export class MainScene extends Scene {
   public gen: AutoGenerator
   public tiles: Tile[]
   public tips: PIXI.Text
+  public tileCountText: PIXI.Text
 
   private spriteLoader: SpriteLoader
+  private tileCount = 0
 
   public constructor() {
     super("main")
@@ -28,6 +30,7 @@ export class MainScene extends Scene {
     this.spriteLoader = new SpriteLoader()
     this.tiles = new Array<Tile>()
     this.tips = new PIXI.Text("", { fill: ["#fff"], fontSize: 16 })
+    this.tileCountText = new PIXI.Text("", { fill: ["#fff"], fontSize: 16 })
     this.gen = new AutoGenerator(this.SIZE_X, this.SIZE_Y)
   }
 
@@ -79,10 +82,13 @@ export class MainScene extends Scene {
     eraseButton.on("pointerdown", () => this.erase())
     this.container.addChild(eraseButton)
 
-    this.tips = new PIXI.Text("", { fill: ["#fff"], fontSize: 16 })
     this.tips.x = 5
     this.tips.y = 5
     this.container.addChild(this.tips)
+
+    this.tileCountText.x = 5
+    this.tileCountText.y = HEIGHT - 22
+    this.container.addChild(this.tileCountText)
 
     this.initializeBoard()
   }
@@ -98,11 +104,13 @@ export class MainScene extends Scene {
   private erase(): void {
     this.tiles.forEach((tile) => tile.erase())
     this.tips.text = ""
+    this.updateTileCount()
   }
 
   private reset(): void {
     this.tiles.forEach((tile) => tile.reset())
     this.tips.text = ""
+    this.updateTileCount()
   }
 
   private solveStart(): void {
@@ -148,6 +156,7 @@ export class MainScene extends Scene {
 
   private initializeBoard(): void {
     this.generate(5)
+    this.onChangeTile()
   }
 
   private generate(cubeNum: number): void {
@@ -163,5 +172,11 @@ export class MainScene extends Scene {
     if (isError) {
       this.reset()
     }
+    this.updateTileCount()
+  }
+
+  public updateTileCount(): void {
+    this.tileCount = this.tiles.reduce((a, b) => a + (b.isBlank() ? 0 : 1), 0)
+    this.tileCountText.text = "Tiles: " + this.tileCount + ` (% 6 == ${this.tileCount % 6})`
   }
 }

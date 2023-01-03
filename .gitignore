@@ -1,11 +1,7 @@
 *.js.map
 *.js
 *.min.js
-*.d.ts
 web.config
 node_modules/
-public/bundle
-public/index.html
 tmp/
-!webpack.config.js
 dist/

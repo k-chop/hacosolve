@@ -57,9 +57,11 @@ export class Tile {
   }
 
   public reset(): void {
-    if (this.state !== 0) {
-      this.state = 1
-    }
+    if (this.state !== 0) this.state = 1
+  }
+
+  public error(): void {
+    if (this.state !== 0) this.state = 5
   }
 
   public canSolve(): boolean {

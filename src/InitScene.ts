@@ -1,9 +1,10 @@
 import { AutoGenerator } from "./AutoGenerator"
 import { HEIGHT, WIDTH } from "./Game"
 import { Scene } from "./Scene"
-import { Solver } from "./Solver"
 import { SpriteLoader } from "./SpriteLoader"
 import { Tile } from "./Tile"
+import SolverWorker from "./solverWorker?worker&inline"
+import { WorkerResult } from "./solverWorker"
 
 /**
  * InitScene
@@ -115,29 +116,30 @@ export class InitScene extends Scene {
     }
 
     const beforeTime = performance.now()
-    const solver = new Solver()
     const board = this.tiles.map((tile) => tile.state)
 
-    solver.solve(board, this.SIZE_X)
+    const worker = new SolverWorker()
+    worker.postMessage({ board, width: this.SIZE_X })
 
-    if (solver.solution == null) {
-      if (solver.message !== "") {
-        this.tips.text = solver.message
-      } else {
-        this.tips.text = "cannot solve..."
-      }
-      for (const tile of this.tiles) {
-        if (tile.state !== 0) {
-          tile.state = 5
+    worker.addEventListener(
+      "message",
+      (event: MessageEvent<WorkerResult>) => {
+        const data = event.data
+        if (data.type === "result") {
+          if (!data.solved) {
+            this.tips.text = data.message ? data.message : "Cannot solve..."
+            this.tiles.forEach((tile) => tile.error())
+          } else {
+            for (let idx = 0; idx < this.tiles.length; idx += 1) {
+              this.tiles[idx].state = data.solution[idx]
+            }
+            const elaspedTime = (performance.now() - beforeTime) / 1000
+            this.tips.text = `Found. elasped time: ${elaspedTime} sec`
+          }
         }
-      }
-    } else {
-      for (let idx = 0; idx < this.tiles.length; idx += 1) {
-        this.tiles[idx].state = solver.solution[idx]
-      }
-      const elaspedTime = (performance.now() - beforeTime) / 1000
-      this.tips.text = `Found ${solver.foundCubeCount} cubes. elasped time: ${elaspedTime} sec`
-    }
+      },
+      { once: true }
+    )
   }
 
   private initializeBoard(): void {

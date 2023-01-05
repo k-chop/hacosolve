@@ -3,14 +3,19 @@ import * as PIXI from "pixi.js"
 const TILE_HITBOX = new PIXI.Polygon([13, 0, 0, 7, 13, 13, 26, 7])
 
 const STATE_COLOR_MAP: { [state: number]: number } = {
-  1: 0xffffff,
-  2: 0x0000ff,
-  3: 0xff00ff,
-  4: 0xffff00,
-  5: 0xff0000,
-  6: 0x00ffff,
-  7: 0x00ff00,
+  1: 0xfff0f0,
+  2: 0x94df8a,
+  3: 0xff514b,
+  4: 0xfce14c,
+  5: 0x4cfccd,
+  6: 0x899cf0,
+  7: 0xf089cf,
 }
+
+const ERROR_STATE = -1
+const BLANK_STATE = 0
+const NORMAL_STATE = 1
+const ERROR_COLOR = 0xff0000
 
 export class Tile {
   public id: number
@@ -52,39 +57,49 @@ export class Tile {
     this.onChangeTile = onChangeTile
   }
 
+  public normal(): void {
+    this.state = NORMAL_STATE
+  }
+
   public erase(): void {
-    this.state = 0
+    this.state = BLANK_STATE
   }
 
   public reset(): void {
-    if (this.state !== 0) this.state = 1
+    if (!this.isBlank()) this.state = NORMAL_STATE
   }
 
   public error(): void {
-    if (this.state !== 0) this.state = 5
+    if (!this.isBlank()) this.state = ERROR_STATE
   }
 
   public canSolve(): boolean {
-    return this.state === 0 || this.state === 1
+    return this.isBlank() || this.isNormal()
   }
 
   public isBlank(): boolean {
-    return this.state === 0
+    return this.state === BLANK_STATE
+  }
+
+  public isNormal(): boolean {
+    return this.state === NORMAL_STATE
   }
 
   public isError(): boolean {
-    return this.state === 5
+    return this.state === ERROR_STATE
   }
 
   public applyColor(): void {
+    this.sprite.alpha = 1
+
     if (this.hovered) {
-      this.sprite.alpha = 1
       this.sprite.tint = 0x00ff00
-    } else if (this.state === 0) {
+    } else if (this.isBlank()) {
       this.sprite.tint = 0xffffff
       this.sprite.alpha = 0.2
+    } else if (this.isError()) {
+      this.sprite.tint = ERROR_COLOR
     } else {
-      this.sprite.alpha = 1
       this.sprite.tint = STATE_COLOR_MAP[this.state]
     }
   }
@@ -100,10 +115,10 @@ export class Tile {
   }
 
   private onPointerDown = (): void => {
-    if (this.state !== 0) {
-      this.state = 0
+    if (!this.isBlank()) {
+      this.erase()
     } else {
-      this.state = 1
+      this.normal()
     }
 
     this.onChangeTile?.()

@@ -1,5 +1,4 @@
 import { AutoGenerator } from "./AutoGenerator"
-import { HEIGHT, WIDTH } from "./Game"
 import { Scene } from "./Scene"
 import { SpriteLoader } from "./SpriteLoader"
 import { Tile } from "./Tile"
